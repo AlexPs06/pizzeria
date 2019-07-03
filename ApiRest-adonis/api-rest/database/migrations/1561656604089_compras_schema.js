@@ -15,6 +15,7 @@ class ComprasSchema extends Schema {
       table.string('telefono')
       table.string('nombre')
       table.string('correo')
+      table.string('estatus')
     })
   }
 

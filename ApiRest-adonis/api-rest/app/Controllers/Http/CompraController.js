@@ -26,6 +26,7 @@ class CompraController {
         compra.telefono = request.body.telefono
         compra.nombre = request.body.nombre
         compra.correo= request.body.correo
+        compra.estatus = request.body.estatus
         let carrito =JSON.parse(request.body.lista)
         const token = request.body.token; 
         console.log(token)
@@ -51,20 +52,21 @@ class CompraController {
         return response.json(compra)
     }
     async update ({params, request, response}) {
-        const compraInfo = request.only(['token', 'lista', 'direccion', 'referencias','telefono', 'nombre','correo'])
+        const compraInfo = request.only(['token', 'lista', 'direccion', 'referencias','telefono', 'nombre','correo', 'estatus'])
 
         const compra = await Compra.find(params.id)
         if (!compra) {
           return response.status(404).json({data: 'Resource not found'})
         }
         
-        compra.token = token
+        compra.token = compraInfo.token
         compra.lista = compraInfo.lista
         compra.direccion = compraInfo.direccion
         compra.referencias = compraInfo.referencias
         compra.telefono = compraInfo.telefono
         compra.nombre = compraInfo.nombre
         compra.correo = compraInfo.correo
+        compra.estatus = compraInfo.estatus
         
 
         await compra.save()
