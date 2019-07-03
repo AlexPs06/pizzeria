@@ -39,11 +39,11 @@
           
           <v-flex xs12 sm6 offset-sm3>
             <div>
-                <v-overflow-btn v-model="tamano" v-on:click="calcularPrecio(CantidadPizzas)" solo :items="TamanoPizza" label="Tamaño" hide-details class="pa-0" ></v-overflow-btn>
+                <v-overflow-btn v-model="tamano" v-on:change="calcularPrecio(CantidadPizzas)" solo :items="TamanoPizza" label="Tamaño" hide-details class="pa-0" ></v-overflow-btn>
               </div>
 
               <div>
-                <v-overflow-btn v-model="masa" v-on:click="calcularPrecio(CantidadPizzas)" solo :items="TiposOrilla" label="Masa" hide-details class="pa-0" ></v-overflow-btn>
+                <v-overflow-btn v-model="masa" v-on:change="calcularPrecio(CantidadPizzas)" solo :items="TiposOrilla" label="Masa" hide-details class="pa-0" ></v-overflow-btn>
               </div>
 
               
