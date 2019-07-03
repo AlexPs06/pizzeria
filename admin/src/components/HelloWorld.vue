@@ -9,7 +9,6 @@
         <td>{{ pedidos.item.referencias }}</td>
         <td>{{ pedidos.item.telefono }}</td>
         <td>{{ ordenes[pedidos.item.id-1] }}</td>
-        <td>{{ pedidos.item.token }}</td>
         <td>
           <div class="conteiner">
             <v-select
@@ -47,7 +46,6 @@ export default {
           { text: 'Referencias', value: 'referencias' },
           { text: 'Telefono', value: 'telefono' },
           { text: 'Pedido', value: 'pedido' },
-          { text: 'Token', value: 'token' },
           { text: 'Estatus', value: 'estatus' }
         ],
         pedidos: [],

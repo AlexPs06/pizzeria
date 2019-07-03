@@ -1,16 +1,22 @@
 <template>
   <v-app>
     <v-toolbar app>
+      <v-btn flat href="/">
       <v-toolbar-title class="headline text-uppercase">
-        <span class="font-weight-light">Upizza</span>
+        
+        <span class="font-weight-light"
+        
+        >
+        Upizza</span>
+        
       </v-toolbar-title>
+      </v-btn>
       <v-spacer></v-spacer>
       <v-btn
         flat
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
+        href="historial"
       >
-        <span class="mr-2">Ingresar</span>
+        <span class="mr-2">Historial</span>
       </v-btn>
     </v-toolbar>
 
