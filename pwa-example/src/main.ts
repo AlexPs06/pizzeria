@@ -21,6 +21,7 @@ messaging.requestPermission().then(()=>{
   console.log("persmiso concedido")
   messaging.getToken().then((token)=>{
     console.log(token)
+    localStorage.setItem("tokenNotificaciones", token+"")
   });
 }).catch((err)=>{
   console.log(err)

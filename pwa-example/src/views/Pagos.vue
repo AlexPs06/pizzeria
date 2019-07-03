@@ -67,6 +67,7 @@ let stripe = Stripe(`pk_test_AjSflyejK3J7quTKNeWfBY0v00XIuUpWtP`),
   card = undefined;
 
   let carrito =JSON.parse(localStorage.getItem("carrito"))
+
   console.log("carrito")
   
   console.log(carrito)
@@ -106,6 +107,11 @@ export default  {
       purchase(email,nombre, telefono, referencias,direccion,precio) {
         stripe.createToken(card).then(function(result) {
           console.log(result.token.id)
+          let tokenNotificaciones=null 
+          if (localStorage.getItem("tokenNotificaciones")!=null) {
+              tokenNotificaciones=localStorage.getItem("tokenNotificaciones");
+          }
+
           let api = "http://127.0.0.1:3333/api/v1"
           axios.post(api + "/compras",{
             token:result.token.id,
@@ -115,11 +121,13 @@ export default  {
             telefono:telefono,
             nombre:nombre,
             correo:email,
+            tokenNotificaciones:tokenNotificaciones
             // ngrok http 8080 -host-header="localhost:8080"
 
           } ).then((response) => {
-            localStorage.clear()
           });
+          localStorage.clear()
+
         });
       },
     },

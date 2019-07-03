@@ -62,7 +62,7 @@ export default {
         //this.pizzas = response.data
         this.pedidos = response.data
         response.data.forEach(element => {
-            console.log(element)
+            console.log(element.tokenNotificaciones)
             this.estatus.push(element.estatus)
             let elementos = JSON.parse(element.lista)
             let orden = "Pizza: " + elementos[0].nombre + ", Ingredientes: " + elementos[0].ingredientes + ", Cantidad: " + elementos[0].cantidadPizzas
