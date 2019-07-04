@@ -31,13 +31,14 @@
                 <v-btn flat color="purple" :to="{name: 'order', params:{id:id}}"   >Ordenar</v-btn>
                 <!-- <router-link :to="{name: 'order', params:{id:1}}" flat color="purple" > Ordenar</router-link> -->
                 <v-spacer></v-spacer>
-                <v-btn icon @click="show = !show">
-                  <v-icon>{{ show ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
+                <v-btn icon @click="show = !show"  v-on:click="description(id)" >
+                  <v-icon>{{ (id==idAux) ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
                 </v-btn>
               </v-card-actions>
 
             <v-slide-y-transition>
-              <v-card-text v-show="show">
+              <v-card-text v-show="idAux==id">
+                {{descripcion}}
               </v-card-text>
             </v-slide-y-transition>
           </v-card>
@@ -54,6 +55,7 @@ import axios from 'axios';
 export default {
     data: () => ({
       show: false,
+      idAux:0,
       pizzas: [],
     }),
     created(){
@@ -62,6 +64,15 @@ export default {
         this.pizzas = response.data
         console.log(this.pizzas[0].nombre)
       })
+    },
+    methods:{
+      description(id){
+        if(id==this.idAux)
+          this.idAux=0
+         else 
+          this.idAux=id
+        
+      }
     }
   };
 </script>

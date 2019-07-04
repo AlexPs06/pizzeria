@@ -62,8 +62,8 @@
         <v-stepper-content step="2">
           <v-form v-model="valid">
             <v-flex xs12 sm6 offset-sm3>
-              <v-btn  flat color="purple" :to="{name: 'home'}" v-on:click="añadirCarrito(idAux, precio, masa, tamano, CantidadPizzas )"   >Añadir al carrito</v-btn>
-              <v-btn  flat color="blue"  :to="{name: 'pagos'}" v-on:click="añadirCarrito(idAux, precio, masa, tamano, CantidadPizzas )" >Finalizar compra</v-btn>
+              <v-btn  flat color="purple" :to="{name: 'carrito'}" v-on:click="añadirCarrito(idAux, precio, masa, tamano, CantidadPizzas )" > <v-icon  style="padding: 5px;" >fas fa-cart-plus</v-icon> Añadir al carrito</v-btn>
+              <v-btn  flat color="blue"  :to="{name: 'pagos'}" v-on:click="añadirCarrito(idAux, precio, masa, tamano, CantidadPizzas )" > <v-icon  style="padding: 5px;" >fab fa-cc-stripe</v-icon> Finalizar compra</v-btn>
               </v-flex>
 
           
@@ -151,7 +151,7 @@ export default  {
             console.log(carrito)
           }
           else{
-            let pizzas=[
+            let item=[
                 {
                     id: id,
                     nombre: this.pizza.nombre,
@@ -164,9 +164,9 @@ export default  {
                     cantidadPizzas:cantidadPizzas
                 }
             ];
-            localStorage.setItem("carrito",JSON.stringify(pizzas))
+            localStorage.setItem("carrito",JSON.stringify(item))
             console.log("pizzas")
-            console.log(pizzas)
+            console.log(item)
 
             
           }

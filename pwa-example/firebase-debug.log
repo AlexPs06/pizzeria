@@ -1,0 +1,65 @@
+[debug] [2019-07-04T13:59:08.230Z] ----------------------------------------------------------------------
+[debug] [2019-07-04T13:59:08.231Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\AlexPS\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only hosting
+[debug] [2019-07-04T13:59:08.232Z] CLI Version:   7.0.2
+[debug] [2019-07-04T13:59:08.232Z] Platform:      win32
+[debug] [2019-07-04T13:59:08.232Z] Node Version:  v10.15.3
+[debug] [2019-07-04T13:59:08.270Z] Time:          Thu Jul 04 2019 08:59:08 GMT-0500 (GMT-05:00)
+[debug] [2019-07-04T13:59:08.270Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-07-04T13:59:08.363Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-07-04T13:59:08.364Z] > authorizing via signed-in user
+[debug] [2019-07-04T13:59:08.364Z] [iam] checking project pizzeria-firebase for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2019-07-04T13:59:08.365Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2019-07-04T13:59:08.365Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2019-07-04T13:59:09.038Z] <<< HTTP RESPONSE 200
+[debug] [2019-07-04T13:59:09.139Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/pizzeria-firebase:testIamPermissions  
+
+[debug] [2019-07-04T13:59:09.860Z] <<< HTTP RESPONSE 200
+[debug] [2019-07-04T13:59:09.861Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/pizzeria-firebase  
+ 
+[debug] [2019-07-04T13:59:10.585Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'pizzeria-firebase'...
+[info] 
+[info] i  deploying hosting
+[debug] [2019-07-04T13:59:10.588Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/pizzeria-firebase/versions  
+
+[debug] [2019-07-04T13:59:12.525Z] <<< HTTP RESPONSE 200
+[info] i  hosting[pizzeria-firebase]: beginning deploy...
+[info] i  hosting[pizzeria-firebase]: found 45 files in dist
+[debug] [2019-07-04T13:59:12.572Z] [hosting] hash cache [ZGlzdA] load error: lines is not defined
+[debug] [2019-07-04T13:59:13.229Z] [hosting] hash cache [ZGlzdA] stored for 45 files
+[debug] [2019-07-04T13:59:13.229Z] [hosting][hash queue][FINAL]
+[debug] [2019-07-04T13:59:13.229Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/pizzeria-firebase/versions/86783d6d7570f206:populateFiles  
+ <request body omitted>
+[debug] [2019-07-04T13:59:14.822Z] <<< HTTP RESPONSE 200
+[debug] [2019-07-04T13:59:14.833Z] [hosting][populate queue][FINAL]
+[debug] [2019-07-04T13:59:14.833Z] [hosting] uploads queued: 28
+[debug] [2019-07-04T13:59:17.198Z] [hosting][upload queue][FINAL]
+[info] +  hosting[pizzeria-firebase]: file upload complete
+[debug] [2019-07-04T13:59:17.205Z] [hosting] deploy completed after 4679ms
+[debug] [2019-07-04T13:59:17.614Z] [
+  {
+    "config": {
+      "public": "dist",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ],
+      "site": "pizzeria-firebase"
+    },
+    "site": "pizzeria-firebase",
+    "version": "sites/pizzeria-firebase/versions/86783d6d7570f206"
+  }
+]
+[info] i  hosting[pizzeria-firebase]: finalizing version...
+[debug] [2019-07-04T13:59:17.614Z] >>> HTTP REQUEST PATCH https://firebasehosting.googleapis.com/v1beta1/sites/pizzeria-firebase/versions/86783d6d7570f206?updateMask=status  
+

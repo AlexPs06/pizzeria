@@ -41,13 +41,15 @@
 
 <script>
 import Vue from 'vue'
+
+      let carrito = JSON.parse(localStorage.getItem('carrito')+"")
+
 export default {
   data() {
     return {
         ordenes: [],
     }
   }, created() {
-      let carrito = JSON.parse(localStorage.getItem('carrito'))
       
       console.log("Carro", carrito)
       carrito.forEach(element => {

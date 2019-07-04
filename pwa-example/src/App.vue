@@ -16,6 +16,7 @@
         flat
         :to="{name:'carrito'}"
       >
+      <v-icon  style="padding: 5px;" >fas fa-shopping-cart</v-icon>
         <span class="mr-2 white--text">Carrito</span>
       </v-btn>
       <v-btn

@@ -32,28 +32,27 @@
               </div>
               <br>
               <div >
-                
-                <v-icon >fas fa-map-marker-alt</v-icon> <v-text-field  single-line solo v-model="direccion" label="Dirección"  required hide-details class="pa-0" >   </v-text-field>
+                 <v-icon color="primary" dark v-on="on">fas fa-home</v-icon><v-text-field  single-line solo v-model="direccion" label="Dirección"  required hide-details class="pa-0" >   </v-text-field>
               </div>
               <br>
 
               <div>
-                <v-text-field  single-line solo v-model="referencias" label="Referencias"  required hide-details class="pa-0" ></v-text-field>
+                <v-icon color="primary" dark v-on="on">home</v-icon> <v-text-field  single-line solo v-model="referencias" label="Referencias"  required hide-details class="pa-0" ></v-text-field>
               </div>
               <br>
 
               <div>
-                <v-text-field  single-line solo v-model="telefono" label="Telefono" hide-details class="pa-0" ></v-text-field>
+                <v-icon color="primary" dark v-on="on">fas fa-mobile-alt</v-icon><v-text-field  single-line solo v-model="telefono" label="Telefono" hide-details class="pa-0" ></v-text-field>
               </div>
               <br>
               
               <div>
-                <v-text-field  single-line solo v-model="nombre"  label="Nombre"  required hide-details class="pa-0" ></v-text-field>
+                <v-icon color="primary" dark v-on="on">fas fa-user</v-icon> <v-text-field  single-line solo v-model="nombre"  label="Nombre"  required hide-details class="pa-0" ></v-text-field>
               </div>
               <br>
               
               <div>
-                <v-text-field  single-line solo v-model="email"  required label="Correo" hide-details class="pa-0" ></v-text-field>
+                <v-icon color="primary" dark v-on="on">fas fa-at</v-icon><v-text-field  single-line solo v-model="email"  required label="Correo" hide-details class="pa-0" ></v-text-field>
               </div>
               <br>
               
@@ -61,7 +60,7 @@
 
           
       </v-form >
-      <v-btn v-if="email&&direccion&&referencias&&telefono&&nombre!=''" v-on:click="purchase(email,nombre, telefono, referencias,direccion,pizzas.precio)">Purchase</v-btn>
+      <v-btn flat color="blue" v-if="email&&direccion&&referencias&&telefono&&nombre!=''" v-on:click="purchase(email,nombre, telefono, referencias,direccion,pizzas.precio)"> <v-icon style="padding: 10px;" >fas fa-credit-card</v-icon> Purchase</v-btn>
       <br>
   </div>
       <!-- <div ref="card"></div> -->
