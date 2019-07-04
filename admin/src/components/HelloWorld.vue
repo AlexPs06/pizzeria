@@ -126,27 +126,26 @@ export default {
         this.ordenes = []
       },
         changeStatus(pedido){
-          let notification= {
-                title: "FCM Message",
-                body: "This is an FCM Message",
+          pedido.estatus = this.estatus[pedido.id-1]
+          console.log("esto es pedido"+pedido.tokenNotificaciones)
+          let notification2= {
+                title: "Orden de pizza",
+                body: "Tu orden esta "+pedido.estatus,
                 icon: "./img/icons/android-chrome-192x192.png"
               }
           let data ={
-            to: pedido.tokenNotificaciones,
-            notification: notification
+            to:pedido.tokenNotificaciones,
+            notification: notification2
           }
-          let api = "https://fcm.googleapis.com/fcm/send"
-          axios.post(api,data,{
+          axios.post("https://fcm.googleapis.com/fcm/send",data,{
           headers:{
-            'Authorization':"key=AAAAR2Ns23c:APA91bHwRlsf2HuHK03B51eGxX2cVflh7CNFGVaSO0Zqi4mpqeyQ4lKZ-cPbLTrw7_YmML31n_q1UuZ2DgJVsbs_mhGXTO51co9vIq6A7-_LWqIVPjlRIQQx0Z9_mAUGBanpoPYHBPoB",
+            Authorization:"key=AAAASim8sYY:APA91bHyE3EdrFabmRy-Lsi2DhWeIRGTPzvS9T638Qee80ah65rST4NOcnbQRsNFyLkZW_sLRdiCOCds_7VwI8l9tNmpJhlncIi1r4_NDSLscLY1cpnYGKw7XmPTwolMtW6dq347F5LK",
             'Content-Type': "application/json",
           }
           }).then((response) => {
           });
-        console.log(pedido.tokenNotificaciones)
-          pedido.estatus = this.estatus[pedido.id-1]
-          console.log(pedido)
-          axios.put(api + "/compras/" + pedido.id, pedido ).then((response) => {
+          
+          axios.put("http://127.0.0.1:3333/api/v1/compras/" + pedido.id, pedido ).then((response) => {
             console.log(response)
           })
         }
