@@ -44,5 +44,11 @@ export default new Router({
       component: () => import('./views/Historial.vue'),
       props: true,
     },
+    {
+      path: '/carrito/',
+      name: 'carrito',
+      component: () => import('./views/Carrito.vue'),
+      props: true,
+    },
   ],
 });

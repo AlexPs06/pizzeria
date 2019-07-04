@@ -1,8 +1,8 @@
 <template>
   <v-app>
-    <v-toolbar app>
+    <v-toolbar color="primary" app>
       <v-btn flat href="/">
-      <v-toolbar-title class="headline text-uppercase">
+      <v-toolbar-title  class="headline text-uppercase  white--text">
         
         <span class="font-weight-light"
         
@@ -14,9 +14,15 @@
       <v-spacer></v-spacer>
       <v-btn
         flat
-        href="historial"
+        :to="{name:'carrito'}"
       >
-        <span class="mr-2">Historial</span>
+        <span class="mr-2 white--text">Carrito</span>
+      </v-btn>
+      <v-btn
+        flat
+        :to="{name:'historial'}"
+      >
+        <span class="mr-2 white--text">Historial</span>
       </v-btn>
     </v-toolbar>
 

@@ -1,5 +1,14 @@
 <template>
+
   <div class="container">
+    <v-alert
+      :value="alert"
+      type="success"
+      dismissible
+      transition="scale-transition"
+    >
+      Estatus modificado
+    </v-alert>
     <v-data-table :headers="headers" :items="pedidos" class="elevation-1">
       <template v-slot:items="pedidos">
         <td>{{ pedidos.item.id }}</td>
@@ -90,7 +99,8 @@ export default {
       ordenes: [],
       items: ["Pedida", "En proceso", "En camino", "Entregada"],
       estatus: [],
-      ocultar : 0
+      ocultar : 0,
+      alert: ""
     };
   },
   created() {
@@ -149,6 +159,9 @@ export default {
           axios.put(api + "/compras/" + pedido.id, pedido ).then((response) => {
             console.log(response)
           })
+          
+        this.alert = true
+        setTimeout(() => this.alert=false, 3000);
         }
     }
   
