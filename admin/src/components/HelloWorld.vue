@@ -110,14 +110,7 @@ export default {
         console.log(response);
       });
     },
-    mostrarPedido(id) {
-        let elementos = JSON.parse(this.pedidos[id-1].lista);
-        elementos.forEach(pedido => {
-          this.ordenes.push(pedido);
-        } )
-            
-        console.log(this.ordenes);
-    }
+   
   }
 };
 </script>
