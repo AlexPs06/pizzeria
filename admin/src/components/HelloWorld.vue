@@ -75,17 +75,20 @@ export default {
       })
     },
     methods:{
-
-      
-
-
+      mostrarPedido(id) {
+        let elementos = JSON.parse(this.pedidos[id-1].lista);
+        elementos.forEach(pedido => {
+          this.ordenes.push(pedido);
+        } )
+            
+        console.log(this.ordenes);
+      },
         changeStatus(pedido){
           let notification= {
                 title: "FCM Message",
                 body: "This is an FCM Message",
                 icon: "./img/icons/android-chrome-192x192.png"
               }
-
           let data ={
             to: pedido.tokenNotificaciones,
             notification: notification
@@ -96,49 +99,14 @@ export default {
             'Authorization':"key=AAAAR2Ns23c:APA91bHwRlsf2HuHK03B51eGxX2cVflh7CNFGVaSO0Zqi4mpqeyQ4lKZ-cPbLTrw7_YmML31n_q1UuZ2DgJVsbs_mhGXTO51co9vIq6A7-_LWqIVPjlRIQQx0Z9_mAUGBanpoPYHBPoB",
             'Content-Type': "application/json",
           }
-          } ).then((response) => {
+          }).then((response) => {
           });
-
-
-
         console.log(pedido.tokenNotificaciones)
-          
-          // const options = {
-          // method: 'POST',
-          // url: 'https://fcm.googleapis.com/fcm/send',
-          // headers: {
-            // 'Authorization':"key=AAAASim8sYY:APA91bHyE3EdrFabmRy-Lsi2DhWeIRGTPzvS9T638Qee80ah65rST4NOcnbQRsNFyLkZW_sLRdiCOCds_7VwI8l9tNmpJhlncIi1r4_NDSLscLY1cpnYGKw7XmPTwolMtW6dq347F5LK",
-            // 'Content-Type': "application/json",
-            //  to: this.pedidos[0].tokenNotificaciones,      
-            //  "Access-Control-Allow-Origin":'*'
-          // },
-          // body: notification,
-          // json: true // JSON stringifies the body automatically
-          // }
-          
-          // request(options)
-          // .then(function (response) {
-          // // Handle success response data
-          // })
-
-          /*
-          curl -X POST -H "Authorization: key=AAAASim8sYY:APA91bHyE3EdrFabmRy-Lsi2DhWeIRGTPzvS9T638Qee80ah65rST4NOcnbQRsNFyLkZW_sLRdiCOCds_7VwI8l9tNmpJhlncIi1r4_NDSLscLY1cpnYGKw7XmPTwolMtW6dq347F5LK" -H "Content-Type: application/json" -d '{
-              "to": "d43Vg-NLBFQ:APA91bG4p86LfApZV9PVb-DwiJ1eQ2eyNgfFmuhZ6bwVPBJR-ds3B-uKVx7C-p0-_sxi1E9N1wVMz78fz3O7twcoNYOY5oY1uD6tQY3nFiWOzzm4hdL2RDcdMrZEZ-j-6eh0O6Zbtp5h",
-              "notification": {
-                "title": "FCM Message",
-                "body": "This is an FCM Message",
-                "icon": "./img/icons/android-chrome-192x192.png"
-              }
-            }' https://fcm.googleapis.com/fcm/send
-          
-          */
-
-
           pedido.estatus = this.estatus[pedido.id-1]
           console.log(pedido)
-          // axios.put(api + "/compras/" + pedido.id, pedido ).then((response) => {
-          //   console.log(response)
-          // })
+          axios.put(api + "/compras/" + pedido.id, pedido ).then((response) => {
+            console.log(response)
+          })
         }
     }
   
