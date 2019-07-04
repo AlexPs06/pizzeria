@@ -20,7 +20,10 @@
           </div>
         </td>
         <td>
-          <v-btn color="info" @click="mostrarPedido(pedidos.item.id)">Ver pedido</v-btn>
+          <v-btn v-if="ocultar != pedidos.item.id" color="info" @click="mostrarPedido(pedidos.item.id)">Ver pedido</v-btn>
+          <v-btn fab small v-if="ocultar == pedidos.item.id" color="error" @click="ocultarPedido()">
+            <v-icon>remove</v-icon>
+          </v-btn>
         </td>
       </template>
     </v-data-table>
@@ -35,12 +38,14 @@
             <div>
               <h3 class="headline mb-0">{{orden.nombre}}</h3>
               <div>Ingredientes: {{orden.ingredientes}} - Masa: {{orden.masa}} - Tamaño: {{orden.tam}}</div>
+              <div>Cantidad: {{orden.cantidadPizzas}}</div>
               <span class="green--text">Precio: {{orden.precio}}</span>
             </div>
           </v-card-title>
 
 
         </v-card>
+        <br>
       </v-flex>
       
     </div>
@@ -84,7 +89,8 @@ export default {
       pedidos: [],
       ordenes: [],
       items: ["Pedida", "En proceso", "En camino", "Entregada"],
-      estatus: []
+      estatus: [],
+      ocultar : 0
     };
   },
   created() {
@@ -103,16 +109,51 @@ export default {
     });
   },
   methods: {
-    changeStatus(pedido) {
-      pedido.estatus = this.estatus[pedido.id - 1];
-      console.log(pedido);
-      axios.put(api + "/compras/" + pedido.id, pedido).then(response => {
-        console.log(response);
-      });
-    },
+    
    
-  }
-};
+      mostrarPedido(id) {
+        this.ocultar = id
+        this.ordenes = []
+        let elementos = JSON.parse(this.pedidos[id-1].lista);
+        elementos.forEach(pedido => {
+          this.ordenes.push(pedido);
+        } )
+            
+        console.log(this.ordenes);
+      },
+      ocultarPedido(){
+        this.ocultar = 0
+        this.ordenes = []
+      },
+        changeStatus(pedido){
+          let notification= {
+                title: "FCM Message",
+                body: "This is an FCM Message",
+                icon: "./img/icons/android-chrome-192x192.png"
+              }
+          let data ={
+            to: pedido.tokenNotificaciones,
+            notification: notification
+          }
+          let api = "https://fcm.googleapis.com/fcm/send"
+          axios.post(api,data,{
+          headers:{
+            'Authorization':"key=AAAAR2Ns23c:APA91bHwRlsf2HuHK03B51eGxX2cVflh7CNFGVaSO0Zqi4mpqeyQ4lKZ-cPbLTrw7_YmML31n_q1UuZ2DgJVsbs_mhGXTO51co9vIq6A7-_LWqIVPjlRIQQx0Z9_mAUGBanpoPYHBPoB",
+            'Content-Type': "application/json",
+          }
+          }).then((response) => {
+          });
+        console.log(pedido.tokenNotificaciones)
+          pedido.estatus = this.estatus[pedido.id-1]
+          console.log(pedido)
+          axios.put(api + "/compras/" + pedido.id, pedido ).then((response) => {
+            console.log(response)
+          })
+        }
+    }
+  
+  
+}
 </script>
 
 <style>
