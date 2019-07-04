@@ -25,38 +25,43 @@
         </v-flex>
         <v-spacer></v-spacer>
       </v-layout> 
-      <v-form v-model="valid">
-            <v-flex xs12 sm6 offset-sm3>
+      <v-form style="padding: 10px;" v-model="valid">
+            <v-flex style="padding: 10px;" xs12 sm6 offset-sm3>
               <div>
                 <div ref="card"></div>
               </div>
-
+              <br>
               <div>
                 <v-text-field  single-line solo v-model="direccion" label="Dirección"  required hide-details class="pa-0" ></v-text-field>
               </div>
+              <br>
 
               <div>
                 <v-text-field  single-line solo v-model="referencias" label="Referencias"  required hide-details class="pa-0" ></v-text-field>
               </div>
+              <br>
 
               <div>
                 <v-text-field  single-line solo v-model="telefono" label="Telefono" hide-details class="pa-0" ></v-text-field>
               </div>
+              <br>
               
               <div>
                 <v-text-field  single-line solo v-model="nombre"  label="Nombre"  required hide-details class="pa-0" ></v-text-field>
               </div>
+              <br>
               
               <div>
                 <v-text-field  single-line solo v-model="email"  required label="Correo" hide-details class="pa-0" ></v-text-field>
               </div>
+              <br>
               
               </v-flex>
 
           
       </v-form >
-      <v-btn v-on:click="purchase(email,nombre, telefono, referencias,direccion,pizzas.precio)">Purchase</v-btn>
-  
+      <v-btn v-if="email&&direccion&&referencias&&telefono&&nombre!=''" v-on:click="purchase(email,nombre, telefono, referencias,direccion,pizzas.precio)">Purchase</v-btn>
+      <br>
   </div>
       <!-- <div ref="card"></div> -->
 </template>
@@ -92,15 +97,13 @@ export default  {
           border: '1px solid #D8D8D8',
           borderRadius: '4px',
           color: "#000",
+          background:"red"
         },
-
-
         invalid: {
           // All of the error styles go inside of here.
         }
-
       };
-      card = elements.create('card', style);
+      card = elements.create('card', {style});
       card.mount(this.$refs.card);
     },
     methods:{
@@ -146,4 +149,7 @@ export default  {
  };
 
 </script>
+<style>
+
+</style>
 

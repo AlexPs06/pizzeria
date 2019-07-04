@@ -38,24 +38,25 @@
             
           
           <v-flex xs12 sm6 offset-sm3>
-            <div>
+              <div>
+                
                 <v-overflow-btn v-model="tamano" v-on:change="calcularPrecio(CantidadPizzas)" solo :items="TamanoPizza" label="Tamaño" hide-details class="pa-0" ></v-overflow-btn>
               </div>
-
+                <br>
               <div>
                 <v-overflow-btn v-model="masa" v-on:change="calcularPrecio(CantidadPizzas)" solo :items="TiposOrilla" label="Masa" hide-details class="pa-0" ></v-overflow-btn>
               </div>
 
               
           </v-flex>
-          <v-btn
+          <br>
+          <v-btn v-if="masa&&tamano!=''"
             color="primary"
             @click="e1 = 2"
           >
             Continue
           </v-btn>
 
-          <v-btn  flat>Cancel</v-btn>
         </v-stepper-content>
 
         <v-stepper-content step="2">
@@ -67,7 +68,7 @@
 
           
             </v-form >
-          <v-btn @click="e1 = 1" flat>Cancelar</v-btn>
+          <v-btn flat color="red" @click="e1 = 1" > <v-icon  style="padding: 5px;" >fas fa-ban</v-icon> Cancelar</v-btn>
         </v-stepper-content>
 
         
@@ -119,7 +120,7 @@ export default  {
         bottomNav: 3,
         email: '',
         quitarPizzas: function( event ) {
-          if (this.CantidadPizzas > 0) {
+          if (this.CantidadPizzas > 1) {
             this.CantidadPizzas -= 1;
             this.calcularPrecio(event);
             }

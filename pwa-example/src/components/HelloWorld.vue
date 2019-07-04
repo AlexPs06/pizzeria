@@ -38,7 +38,6 @@
 
             <v-slide-y-transition>
               <v-card-text v-show="show">
-                {{descripcion}}
               </v-card-text>
             </v-slide-y-transition>
           </v-card>
