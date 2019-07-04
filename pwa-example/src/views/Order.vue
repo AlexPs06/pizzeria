@@ -23,9 +23,8 @@
                   </div>
                   <v-spacer></v-spacer>
                   <div class="mr-2">
-                      <v-btn flat color="blue" v-on:click="quitarPizzas(CantidadPizzas)"  >-</v-btn>
-                      
-                      <v-btn color="blue" flat v-on:click="aumentarPizzas(CantidadPizzas)" >+</v-btn>
+                      <v-btn fab small color="blue" flat v-on:click="quitarPizzas(CantidadPizzas)"  >-</v-btn>
+                      <v-btn fab small color="blue" flat v-on:click="aumentarPizzas(CantidadPizzas)" >+</v-btn >
                       <v-flex>
                         <label>Pizzas: {{CantidadPizzas}} </label> 
                       </v-flex>
@@ -63,9 +62,8 @@
         <v-stepper-content step="2">
           <v-form v-model="valid">
             <v-flex xs12 sm6 offset-sm3>
-              <v-icon >fas fa-shopping-cart</v-icon>
-               <v-btn  flat color="purple" :to="{name: 'pagos'}"  v-on:click="añadirCarrito(idAux, precio, masa, tamano, CantidadPizzas )" ><v-icon style="padding: 5px;" >fas fa-cart-plus</v-icon> Añadir al carrito</v-btn>
-              <v-btn  flat color="blue"  :to="{name: 'pagos'}" v-on:click="añadirCarrito(idAux, precio, masa, tamano, CantidadPizzas )" ><v-icon  style="padding: 5px;" >fab fa-cc-stripe</v-icon> Finalizar compra</v-btn>
+              <v-btn  flat color="purple" :to="{name: 'home'}" v-on:click="añadirCarrito(idAux, precio, masa, tamano, CantidadPizzas )"   >Añadir al carrito</v-btn>
+              <v-btn  flat color="blue"  :to="{name: 'pagos'}" v-on:click="añadirCarrito(idAux, precio, masa, tamano, CantidadPizzas )" >Finalizar compra</v-btn>
               </v-flex>
 
           

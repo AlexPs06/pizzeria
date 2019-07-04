@@ -125,6 +125,7 @@ export default  {
             telefono:telefono,
             nombre:nombre,
             correo:email,
+            estado: "Pedida",
             tokenNotificaciones:tokenNotificaciones
             // ngrok http 8080 -host-header="localhost:8080"
 

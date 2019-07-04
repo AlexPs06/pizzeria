@@ -1,8 +1,8 @@
 <template>
   <v-app>
-    <v-toolbar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>Admin</span>
+    <v-toolbar color="primary" app>
+      <v-toolbar-title  class="headline text-uppercase">
+        <span class=" white--text">Admin</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       
