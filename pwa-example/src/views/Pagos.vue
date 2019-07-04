@@ -31,8 +31,9 @@
                 <div ref="card"></div>
               </div>
               <br>
-              <div>
-                <v-text-field  single-line solo v-model="direccion" label="Dirección"  required hide-details class="pa-0" ></v-text-field>
+              <div >
+                
+                <v-icon >fas fa-map-marker-alt</v-icon> <v-text-field  single-line solo v-model="direccion" label="Dirección"  required hide-details class="pa-0" >   </v-text-field>
               </div>
               <br>
 
