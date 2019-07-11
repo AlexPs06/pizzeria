@@ -224,7 +224,7 @@ export default  {
     props:['id'],
     created(){
       this.idAux=this.id
-      let api = "http://127.0.0.1:3333/api/v1"
+      let api = "https://495ec686.ngrok.io/api/v1"
       axios.get(api + "/pizzas/"+this.id ).then((response) => {
         this.pizza = response.data
         this.precio=this.pizza.precio

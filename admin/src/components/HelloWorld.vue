@@ -65,7 +65,10 @@
 <script>
 import axios from "axios";
 
-let api = "http://127.0.0.1:3333/api/v1";
+let apiRock= ""
+let apilocal="https://495ec686.ngrok.io"
+
+let api = apilocal+"/api/v1";
 
 export default {
   data() {
@@ -104,7 +107,7 @@ export default {
     };
   },
   created() {
-    axios.get(api + "/compras").then(response => {
+    axios.get("https://495ec686.ngrok.io/api/v1/compras").then(response => {
       
       //this.pizzas = response.data
       this.pedidos = response.data;
@@ -155,7 +158,7 @@ export default {
           }).then((response) => {
           });
           
-          axios.put("http://127.0.0.1:3333/api/v1/compras/" + pedido.id, pedido ).then((response) => {
+          axios.put("https://495ec686.ngrok.io/api/v1/compras/" + pedido.id, pedido ).then((response) => {
             console.log(response)
           })
           

@@ -60,7 +60,7 @@
 
           
       </v-form >
-      <v-btn flat color="blue" v-if="email&&direccion&&referencias&&telefono&&nombre!=''" v-on:click="purchase(email,nombre, telefono, referencias,direccion,pizzas.precio)"> <v-icon style="padding: 10px;" >fas fa-credit-card</v-icon> Purchase</v-btn>
+      <v-btn flat color="blue" v-if="email&&direccion&&referencias&&telefono&&nombre!=''" v-on:click="purchase(email,nombre, telefono, referencias,direccion,pizzas.precio)"   > <v-icon style="padding: 10px;" >fas fa-credit-card</v-icon> Pago</v-btn>
       <br>
   </div>
       <!-- <div ref="card"></div> -->
@@ -115,7 +115,7 @@ export default  {
               tokenNotificaciones=localStorage.getItem("tokenNotificaciones");
           }
 
-          let api = "http://127.0.0.1:3333/api/v1"
+          let api = "https://495ec686.ngrok.io/api/v1"
           axios.post(api + "/compras",{
             token:result.token.id,
             lista: localStorage.getItem("carrito"),
@@ -124,7 +124,7 @@ export default  {
             telefono:telefono,
             nombre:nombre,
             correo:email,
-            estado: "Pedida",
+            estatus: "Pedida",
             tokenNotificaciones:tokenNotificaciones
             // ngrok http 8080 -host-header="localhost:8080"
 

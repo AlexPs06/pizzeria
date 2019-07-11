@@ -59,7 +59,7 @@ export default {
       pizzas: [],
     }),
     created(){
-      let api = "http://127.0.0.1:3333/api/v1"
+      let api = "https://495ec686.ngrok.io/api/v1"
       axios.get(api + "/pizzas" ).then((response) => {
         this.pizzas = response.data
         console.log(this.pizzas[0].nombre)
