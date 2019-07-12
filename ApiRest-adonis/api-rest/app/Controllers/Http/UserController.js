@@ -113,7 +113,7 @@ class UserController {
             OTP += string[Math.floor(Math.random() * string.length)];
         }
 
-
+        //================= Descomentar de aqui para el envio de codigo al correo=========================
         // const msg = {
         //     to: user.email,
         //     from: 'joalgosan24@gmail.com',
@@ -144,6 +144,8 @@ class UserController {
         //     status: 201,
         //     code: `¡Código enviado a su correo!`
         // })
+
+        //================= hasta aquiiiiiiiiiiiiiiiiii========================
 
 
         return response.status(201).json({
