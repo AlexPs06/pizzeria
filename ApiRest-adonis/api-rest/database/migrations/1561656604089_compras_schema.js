@@ -8,6 +8,7 @@ class ComprasSchema extends Schema {
         this.create('compras', (table) => {
             table.increments()
             table.timestamps()
+            table.integer('user_id').unsigned().references('id').inTable('users')
             table.string('token')
             table.string('lista')
             table.string('direccion')

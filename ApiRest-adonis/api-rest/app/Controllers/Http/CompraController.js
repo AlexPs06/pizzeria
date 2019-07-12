@@ -1,11 +1,14 @@
 'use strict'
 const Compra = use("App/Models/Compra")
+const Historial = use("App/Models/Historial")
+
+
 const stripe = require('stripe')('sk_test_WPxp1ZDJ23xC0gywfy6S3fgZ00421Q9xmz');
 
 class CompraController {
     async index({ response }) {
         let compras = await Compra.all()
-
+        await Historial.create(this.logData(4, 200, `Adquisición de lista de compras`))
         return response.json(compras)
     }
     async store({ request, response }) {
@@ -38,7 +41,7 @@ class CompraController {
 
         const token = request.body.token;
         try {
-            (async() => {
+            (async () => {
                 const charge = await stripe.charges.create({
                     amount: total * 100,
                     currency: 'mxn',
@@ -46,22 +49,28 @@ class CompraController {
                     source: token,
                 });
             })();
+            await Historial.create(this.logData(5, 201, `Compra exitosa de ${total}.`))
+
         } catch (error) {
+            await Historial.create(this.logData(5, 400, `Compra fallida de ${total}. Error desde Stripe.`))
             console.error(error)
         }
 
         await compra.save()
         return response.status(201).json(compra)
     }
+
     async show({ params, response }) {
         const compra = await Compra.find(params.id)
         return response.json(compra)
     }
+
     async update({ params, request, response }) {
         const compraInfo = request.only(['token', 'lista', 'direccion', 'referencias', 'telefono', 'nombre', 'correo', 'estatus'])
 
         const compra = await Compra.find(params.id)
         if (!compra) {
+            await Historial.create(this.logData(5, 404, `Datos incorrectos para la actualización de la compra.`))
             return response.status(404).json({ data: 'Resource not found' })
         }
 
@@ -74,21 +83,31 @@ class CompraController {
         compra.correo = compraInfo.correo
         compra.estatus = compraInfo.estatus
 
-
         await compra.save()
+        await Historial.create(this.logData(5, 200, `Usuario ${compra.nombre}: Actualización exitoso de los datos de la compra.`))
         return response.status(201).json(compra)
     }
 
     async delete({ params, response }) {
         const compra = await Compra.find(params.id)
         if (!compra) {
+            await Historial.create(this.logData(5, 404, `Datos incorrectos para eliminar compra.`))
+
             return response.status(404).json({ data: 'Resource not found' })
         }
+        await Historial.create(this.logData(5, 200, `Usuario ${compra.nombre}: Eliminación exitoso de la compra.`))
         await compra.delete()
-
         return response.status(204).json(null)
     }
 
+
+    logData(tipo, estatus, informacion) {
+        return {
+            tipo: tipo,
+            estatus: estatus,
+            informacion: informacion
+        }
+    }
 }
 
 module.exports = CompraController
