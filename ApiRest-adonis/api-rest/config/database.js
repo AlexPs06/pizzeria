@@ -16,7 +16,7 @@ module.exports = {
   | interacting with SQL databases.
   |
   */
-  connection: Env.get('DB_CONNECTION', 'sqlite'), //mysql  sqlite
+  connection: Env.get('DB_CONNECTION', 'mysql'), //mysql  sqlite
 
   /*
   |--------------------------------------------------------------------------

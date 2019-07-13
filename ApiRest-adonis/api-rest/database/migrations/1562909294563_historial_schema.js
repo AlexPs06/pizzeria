@@ -13,7 +13,7 @@ class HistorialSchema extends Schema {
         'Usuario',
         'Admin',
         'Compra',
-        'Pizzas'
+        'Pizzas',
       ]).notNullable()
       table.integer('estatus').notNullable()
       table.text('informacion').defaultTo('Sin información')

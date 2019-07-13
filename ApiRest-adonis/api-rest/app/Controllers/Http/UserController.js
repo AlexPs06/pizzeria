@@ -9,10 +9,25 @@ const sgMail = require('@sendgrid/mail')
 sgMail.setApiKey('SG.41raJkeHSzySNUK7SorARQ.zRg8XsaCa36_sgWgn-Q5FwDd33quUygz6pRq95Livc');
 
 
-// auth.current.user.id
+
 
 
 class UserController {
+    //============S=========
+    async crearAdmin() {
+        const userData = {
+            username: 'admin',
+            email: 'admin@admin.com',
+            password: 'admin1234',
+            user_type: 1
+        }
+        await User.create(userData)
+        return userData
+    }
+    //============S=========
+
+
+
     async login({ request, auth, response }) {
         const userData = request.only(['email', 'password'])
         const rules = {
@@ -40,7 +55,7 @@ class UserController {
             })
         }
 
-        const token = await auth.attempt(userData.email, userData.password)
+        const { token } = await auth.attempt(userData.email, userData.password)
         const message = `Usuario logueado: Nombre: ${user.username}; Email: ${user.email}.`
         await Historial.create(this.logData(1, 200, message))
         return response.status(200).json({
@@ -72,7 +87,7 @@ class UserController {
         }
 
         const user = await User.create(userData)
-        const token = await auth.generate(user)
+        const { token } = await auth.generate(user)
         const message = `Usuario creado: Nombre: ${userData.username}; Email: ${userData.email}.`
         await Historial.create(this.logData(2, 201, message))
         return response.status(201).json({

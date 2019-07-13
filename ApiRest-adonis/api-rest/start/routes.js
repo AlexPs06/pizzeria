@@ -21,11 +21,18 @@ Route.get('/', () => {
 
 Route.group(() => {
   /*
-  enviar codigo de cmabio al correo del sujeto :U
-  logs para la compra de pizzas
+  EJECUTAR UNA SOLA VEZ EL END-POINT PARA CREAR USUARIOS
+
+  LOS DATOS DEL USUARIO LOS PUSE MANUAL
+
+  Route.post('crear_admin', 'UserController.crearAdmin')
+
+
+
   */
 
 
+  Route.post('crear_admin', 'UserController.crearAdmin')
 
   Route.post('login', 'UserController.login')
   Route.post('signup', 'UserController.signup')
@@ -33,27 +40,20 @@ Route.group(() => {
   Route.post('recovery_password/codigo_de_cambio', 'UserController.getChangeCode')
   Route.post('recovery_password/cambiar', 'UserController.changePassword')
 
-  Route.get('admin/logs', 'HistorialController.index')
+  Route.get('admin/logs', 'HistorialController.index').middleware(['auth:jwt'])
 
 
-
-
-
-
-
-
-
-  Route.post('pizzas', 'PizzaController.store')
+  Route.post('pizzas', 'PizzaController.store').middleware(['auth:jwt'])
   Route.get('pizzas', 'PizzaController.index')
   Route.get('pizzas/:id', 'PizzaController.show')
-  Route.put('pizzas/:id', 'PizzaController.update')
-  Route.delete('pizzas/:id', 'PizzaController.delete')
+  Route.put('pizzas/:id', 'PizzaController.update').middleware(['auth:jwt'])
+  Route.delete('pizzas/:id', 'PizzaController.delete').middleware(['auth:jwt'])
 
 
-  Route.post('compras', 'CompraController.store')
-  Route.get('compras', 'CompraController.index')
-  Route.get('compras/:id', 'CompraController.show')
-  Route.put('compras/:id', 'CompraController.update')
-  Route.delete('compras/:id', 'CompraController.delete')
+  Route.post('compras', 'CompraController.store').middleware(['auth:jwt'])
+  Route.get('compras', 'CompraController.index').middleware(['auth:jwt'])
+  Route.get('compras/:id', 'CompraController.show').middleware(['auth:jwt'])
+  Route.put('compras/:id', 'CompraController.update').middleware(['auth:jwt'])
+  Route.delete('compras/:id', 'CompraController.delete').middleware(['auth:jwt'])
 
 }).prefix('api/v1')

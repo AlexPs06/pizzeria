@@ -6,10 +6,17 @@ const Historial = use("App/Models/Historial")
 class PizzaController {
   async index({ response }) {
     let pizzas = await Pizza.all()
-
     return response.json(pizzas)
   }
-  async store({ request, response }) {
+  async store({ auth, request, response }) {
+    if (auth.current.user.user_type == 'client') {
+      await Historial.create(this.logData(6, 400, `Acceso no autorizado en crear pizzas para: Usuario: ${auth.current.user.username}, Email: ${auth.current.user.email}, Tipo de usuario: ${auth.current.user.user_type}`))
+      return response.status(400).json({
+        status: 400,
+        message: 'Acceso solo a administradores.'
+      })
+    }
+
     const pizzaInfo = request.only(['nombre', 'ingredientes', 'imagen', 'descripcion', 'precio'])
     const pizza = new Pizza()
     pizza.nombre = pizzaInfo.nombre
@@ -26,7 +33,15 @@ class PizzaController {
     const pizza = await Pizza.find(params.id)
     return response.json(pizza)
   }
-  async update({ params, request, response }) {
+  async update({ params, auth, request, response }) {
+    if (auth.current.user.user_type == 'client') {
+      await Historial.create(this.logData(6, 400, `Acceso no autorizado en actualizar pizzas para: Usuario: ${auth.current.user.username}, Email: ${auth.current.user.email}, Tipo de usuario: ${auth.current.user.user_type}`))
+      return response.status(400).json({
+        status: 400,
+        message: 'Acceso solo a administradores.'
+      })
+    }
+
     const pizzaInfo = request.only(['nombre', 'ingredientes', 'imagen', 'descripcion', 'precio'])
 
     const pizza = await Pizza.find(params.id)
@@ -43,7 +58,15 @@ class PizzaController {
     return response.status(201).json(pizza)
   }
 
-  async delete({ params, response }) {
+  async delete({ params, auth, response }) {
+    if (auth.current.user.user_type == 'client') {
+      await Historial.create(this.logData(6, 400, `Acceso no autorizado en eliminar pizza para: Usuario: ${auth.current.user.username}, Email: ${auth.current.user.email}, Tipo de usuario: ${auth.current.user.user_type}`))
+      return response.status(400).json({
+        status: 400,
+        message: 'Acceso solo a administradores.'
+      })
+    }
+
     const pizza = await Pizza.find(params.id)
     if (!pizza) {
       await Historial.create(this.logData(6, 404, `Datos incorrectos para eliminar pizza.`))

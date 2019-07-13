@@ -1,4 +1,5 @@
 'use strict'
+const User = use("App/Models/User")
 const Compra = use("App/Models/Compra")
 const Historial = use("App/Models/Historial")
 
@@ -7,11 +8,13 @@ const stripe = require('stripe')('sk_test_WPxp1ZDJ23xC0gywfy6S3fgZ00421Q9xmz');
 
 class CompraController {
     async index({ response }) {
-        let compras = await Compra.all()
+        
+        let compras = await User.query().with('compras').fetch()
         await Historial.create(this.logData(4, 200, `Adquisición de lista de compras`))
         return response.json(compras)
     }
-    async store({ request, response }) {
+    async store({ request, auth,  response }) {
+        
         // const compraInfo = request.only(['token', 'lista', 'direccion', 'referencias','telefono', 'nombre','correo'])
         // const compra = new Compra()
         // compra.token = compraInfo.token
@@ -22,6 +25,7 @@ class CompraController {
         // compra.nombre = compraInfo.nombre
         // compra.correo = compraInfo.correo
         const compra = new Compra()
+        compra.user_id = auth.current.user.id
         compra.token = request.body.token
         compra.lista = request.body.lista
         compra.direccion = request.body.direccion
@@ -65,7 +69,15 @@ class CompraController {
         return response.json(compra)
     }
 
-    async update({ params, request, response }) {
+    async update({ params, auth,  request, response }) {
+        if( auth.current.user.user_type == 'client'){
+            await Historial.create(this.logData(4, 400, `Acceso no autorizado para modificar compras: Usuario: ${auth.current.user.username}, Email: ${auth.current.user.email}, Tipo de usuario: ${auth.current.user.user_type}`))
+            return response.status(400).json({
+                status: 400,
+                message: 'Acceso solo a administradores.'
+            })
+        }
+
         const compraInfo = request.only(['token', 'lista', 'direccion', 'referencias', 'telefono', 'nombre', 'correo', 'estatus'])
 
         const compra = await Compra.find(params.id)
