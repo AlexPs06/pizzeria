@@ -6,7 +6,7 @@ const LlaveCambioPassword = use("App/Models/LlaveCambioPassword")
 const { validate } = use('Validator')
 
 const sgMail = require('@sendgrid/mail')
-sgMail.setApiKey('SG.41raJkeHSzySNUK7SorARQ.zRg8XsaCa36_sgWgn-Q5FwDd33quUygz6pRq95Livc');
+sgMail.setApiKey(KEY);
 
 
 
@@ -135,26 +135,25 @@ class UserController {
         //     subject: "Pizzería Ulalá :3",
         //     html: `<p>¡Hola ${user.name} ! Éste es tu código de validación para el cambio de tu contraseña: <strong>${OTP}</strong></p>`,
         // }
-
         // const statusSendGrid = await sgMail.send(msg)
         //     .then((resp) => {
         //         return 200
         //     })
-        //     .catch((error) => {
+        //     .catch(error => {
         //         return 400
         //     })
-
+        // console.log(statusSendGrid)
         // if (statusSendGrid == 400) {
-        //     await Historial.create(this.logData(3, 200, `Código NO enviado a ${user.email}. Error en Sendgrid: ${error}`))
+        //     await Historial.create(this.logData(3, 200, `Código NO enviado a ${user.email} Inautorizado. Error en Sendgrid.`))
         //     return response.status(400).json({
         //         status: 400,
         //         code: `Código NO enviado al correo`
         //     })
         // }
 
-        await Historial.create(this.logData(3, 201, `${OTP} codigo generado para el cambio de contraseña del email: ${user.email}`))
+        // await Historial.create(this.logData(3, 201, `${OTP} codigo generado para el cambio de contraseña del email: ${user.email}`))
         await LlaveCambioPassword.create({ email: user.email, key: OTP })
-        // await Historial.create(this.logData(3, 200, `${OTP} codigo enviado exitosamente a ${user.email}`))
+        await Historial.create(this.logData(3, 200, `${OTP} codigo enviado exitosamente a ${user.email}`))
         // return response.status(201).json({
         //     status: 201,
         //     code: `¡Código enviado a su correo!`
@@ -202,7 +201,7 @@ class UserController {
             .where('used', false)
             .fetch()
 
-        if (keyID.length == 0) {
+        if (keyID.toJSON().length == 0) {
             const message = `LLave ${userData.key} inválido para el cambio de contraseña.`
             await Historial.create(this.logData(3, 400, message))
             return response.status(400).json({
@@ -210,6 +209,7 @@ class UserController {
                 warning: 'Llave inválido.'
             })
         }
+
         const key = await LlaveCambioPassword.find(keyID.toJSON()[0].id)
         key.used = true
         await key.save()
@@ -223,6 +223,59 @@ class UserController {
         })
 
     }
+
+
+    async updateProfile({ request, response }) {
+        const userData = request.only(['username', 'password', 'email'])
+        const rules = {
+            username: 'required',
+            email: 'required',
+            password: 'required|min:6'
+        }
+
+        const validation = await validate(userData, rules)
+
+        if (validation.fails()) {
+            await Historial.create(this.logData(3, 400, `Datos incompletos: ${validation.messages()[0].message} para actualizar perfil del usuario.`))
+            return response.status(400).json({
+                status: 400,
+                warning: validation.messages()
+            })
+        }
+
+        const user = await User.findBy('email', userData.email)
+        if (user === null) {
+            const message = `Email ${userData.email} inexistente para la actualización del perfil.`
+            await Historial.create(this.logData(3, 400, message))
+            return response.status(400).json({
+                status: 400,
+                warning: 'Email inexistente para la actualización del perfil.'
+            })
+        }
+
+        let userNameBefore = user.username
+
+        user.username = userData.username
+        user.password = userData.password
+        try {
+            await user.save()
+            await Historial.create(this.logData(3, 200, `Actualización del perfil para el usuario ${userNameBefore} a ${userData.username}`))
+            return response.status(200).json({
+                status: 200,
+                message: 'Actualización de perfil exitosa.'
+            })
+        } catch (error) {
+            await Historial.create(this.logData(3, 400, `Actualización fallida para el usuario ${userNameBefore}. ${error.sqlMessage}`))
+            return response.status(400).json({
+                status: 400,
+                message: `Actualización fallida. ${error.sqlMessage}`
+            })
+        }
+
+    }
+
+
+
 
     logData(tipo, estatus, informacion) {
         return {

@@ -21,7 +21,7 @@ Route.get('/', () => {
 
 Route.group(() => {
   /*
-  EJECUTAR UNA SOLA VEZ EL END-POINT PARA CREAR USUARIOS
+  EJECUTAR UNA SOLA VEZ EL END-POINT PARA CREAR ADMINISTRADOR
 
   LOS DATOS DEL USUARIO LOS PUSE MANUAL
 
@@ -41,6 +41,8 @@ Route.group(() => {
   Route.post('recovery_password/cambiar', 'UserController.changePassword')
 
   Route.get('admin/logs', 'HistorialController.index').middleware(['auth:jwt'])
+
+  Route.put('user/profile/update', 'UserController.updateProfile').middleware(['auth:jwt'])
 
 
   Route.post('pizzas', 'PizzaController.store').middleware(['auth:jwt'])
