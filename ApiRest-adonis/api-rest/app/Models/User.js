@@ -39,6 +39,10 @@ class User extends Model {
     return this.hasMany('App/Models/Compra')
   }
 
+  historials () {
+    return this.hasMany('App/Models/Historial')
+  }
+
 }
 
 module.exports = User

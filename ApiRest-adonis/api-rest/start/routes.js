@@ -39,10 +39,14 @@ Route.group(() => {
 
   Route.post('recovery_password/codigo_de_cambio', 'UserController.getChangeCode')
   Route.post('recovery_password/cambiar', 'UserController.changePassword')
+  Route.post('check_account', 'UserController.checkAccount')
 
-  Route.get('admin/logs', 'HistorialController.index').middleware(['auth:jwt'])
 
-  Route.put('user/profile/update', 'UserController.updateProfile').middleware(['auth:jwt'])
+  Route.get('logs', 'HistorialController.index').middleware(['auth:jwt'])
+  Route.get('logs_user', 'HistorialController.show').middleware(['auth:jwt'])
+
+
+  Route.put('profile/update', 'UserController.updateProfile').middleware(['auth:jwt'])
 
 
   Route.post('pizzas', 'PizzaController.store').middleware(['auth:jwt'])
