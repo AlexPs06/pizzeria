@@ -6,7 +6,8 @@ const LlaveCambioPassword = use("App/Models/LlaveCambioPassword")
 const { validate } = use('Validator')
 
 const sgMail = require('@sendgrid/mail')
-sgMail.setApiKey(KEY);
+    // KEY = "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"
+sgMail.setApiKey("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");
 
 
 
@@ -15,16 +16,16 @@ sgMail.setApiKey(KEY);
 class UserController {
     //============S=========
     async crearAdmin() {
-        const userData = {
-            username: 'admin',
-            email: 'admin@admin.com',
-            password: 'admin1234',
-            user_type: 1
+            const userData = {
+                username: 'admin',
+                email: 'admin@admin.com',
+                password: 'admin1234',
+                user_type: 1
+            }
+            await User.create(userData)
+            return userData
         }
-        await User.create(userData)
-        return userData
-    }
-    //============S=========
+        //============S=========
 
 
 
@@ -154,10 +155,10 @@ class UserController {
         // await Historial.create(this.logData(3, 201, `${OTP} codigo generado para el cambio de contraseña del email: ${user.email}`))
         await LlaveCambioPassword.create({ email: user.email, key: OTP })
         await Historial.create(this.logData(3, 200, `${OTP} codigo enviado exitosamente a ${user.email}`))
-        // return response.status(201).json({
-        //     status: 201,
-        //     code: `¡Código enviado a su correo!`
-        // })
+            // return response.status(201).json({
+            //     status: 201,
+            //     code: `¡Código enviado a su correo!`
+            // })
 
         //================= hasta aquiiiiiiiiiiiiiiiiii========================
 

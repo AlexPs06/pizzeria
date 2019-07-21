@@ -4,17 +4,17 @@ const Compra = use("App/Models/Compra")
 const Historial = use("App/Models/Historial")
 
 
-const stripe = require('stripe')('sk_test_WPxp1ZDJ23xC0gywfy6S3fgZ00421Q9xmz');
+const stripe = require('stripe')('pk_test_AjSflyejK3J7quTKNeWfBY0v00XIuUpWtP');
 
 class CompraController {
     async index({ response }) {
-        
+
         let compras = await User.query().with('compras').fetch()
         await Historial.create(this.logData(4, 200, `Adquisición de lista de compras`))
         return response.json(compras)
     }
-    async store({ request, auth,  response }) {
-        
+    async store({ request, auth, response }) {
+
         // const compraInfo = request.only(['token', 'lista', 'direccion', 'referencias','telefono', 'nombre','correo'])
         // const compra = new Compra()
         // compra.token = compraInfo.token
@@ -45,7 +45,7 @@ class CompraController {
 
         const token = request.body.token;
         try {
-            (async () => {
+            (async() => {
                 const charge = await stripe.charges.create({
                     amount: total * 100,
                     currency: 'mxn',
@@ -69,8 +69,8 @@ class CompraController {
         return response.json(compra)
     }
 
-    async update({ params, auth,  request, response }) {
-        if( auth.current.user.user_type == 'client'){
+    async update({ params, auth, request, response }) {
+        if (auth.current.user.user_type == 'client') {
             await Historial.create(this.logData(4, 400, `Acceso no autorizado para modificar compras: Usuario: ${auth.current.user.username}, Email: ${auth.current.user.email}, Tipo de usuario: ${auth.current.user.user_type}`))
             return response.status(400).json({
                 status: 400,

@@ -115,7 +115,7 @@ export default  {
               tokenNotificaciones=localStorage.getItem("tokenNotificaciones");
           }
 
-          let api = "https://495ec686.ngrok.io/api/v1"
+          let api = "http://127.0.0.1:3333/api/v1"
           axios.post(api + "/compras",{
             token:result.token.id,
             lista: localStorage.getItem("carrito"),

@@ -1,45 +1,14 @@
 <template>
-  <v-app>
-    <v-toolbar color="primary" app>
-      <v-btn flat href="/">
-      <v-toolbar-title  class="headline text-uppercase  white--text">
-        
-        <span class="font-weight-light"
-        
-        >
-        Upizza</span>
-        
-      </v-toolbar-title>
-      </v-btn>
-      <v-spacer></v-spacer>
-      <v-btn
-        flat
-        :to="{name:'carrito'}"
-      >
-      <v-icon  style="padding: 5px;" >fas fa-shopping-cart</v-icon>
-        <span class="mr-2 white--text">Carrito</span>
-      </v-btn>
-      <v-btn
-        flat
-        :to="{name:'historial'}"
-      >
-        <span class="mr-2 white--text">Historial</span>
-      </v-btn>
-    </v-toolbar>
-
-    <v-content>
-      <router-view></router-view>
-    </v-content>
-  </v-app>
+    <Header />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import Header from './components/Header';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
+    Header,
   },
   data() {
     return {
