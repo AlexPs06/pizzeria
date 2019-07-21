@@ -1,6 +1,6 @@
 <template>
 
- <v-layout>
+ <v-layout row>
     <v-flex xs12 sm6 offset-sm3>
       <v-card>
         <v-img
@@ -42,22 +42,22 @@ export default  {
   methods:{
       signup(name, email, password, passwordConfirm) {
         
-        let user={
-            username:name,
-            email: email,
-            password: password, 
-            passwordConfirm: passwordConfirm
-        }
-        // localStorage.setItem("Login","true")
-        // localStorage.clear()
-        console.log(email)
-        console.log(password)
+        // let user={
+        //     username:name,
+        //     email: email,
+        //     password: password, 
+        //     passwordConfirm: passwordConfirm
+        // }
+        // // localStorage.setItem("Login","true")
+        // // localStorage.clear()
+        // console.log(email)
+        // console.log(password)
 
-        let api = "http://127.0.0.1:3333/api/v1"
-          axios.post(api + "/signup",{user
-          }).then((response) => {
-              console.log(response)
-          });
+        // let api = "http://127.0.0.1:3333/api/v1"
+        //   axios.post(api + "/signup",{user
+        //   }).then((response) => {
+              // console.log(response.warning)
+        //   });
       },
     },
 };

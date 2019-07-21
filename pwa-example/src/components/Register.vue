@@ -19,7 +19,7 @@
 
                         <v-text-field v-model="email" prepend-icon="email" name="correo" label="Correo" type="text"></v-text-field>
                         <v-text-field v-model="password" prepend-icon="lock" name="password" label="Password" id="password" type="password"></v-text-field>
-                        <v-text-field v-model="passwordConfirm" prepend-icon="lock" name="password" label="Confirmar contraseña" id="password" type="password"></v-text-field>
+                        <v-text-field v-model="passwordConfirm" prepend-icon="lock" name="password" label="Confirmar contraseña" id="passwordConfirm" type="password"></v-text-field>
                         
                         </v-form>
                     </v-card-text>
@@ -63,24 +63,18 @@ export default  {
   },
   methods:{
       signup(name, email, password, passwordConfirm) {
-        
-        let user={
-            username:name,
-            email: email,
-            password: password, 
-        }
-        // localStorage.setItem("Login","true")
-        console.log(email)
-        console.log(password)
-
         let api = "http://127.0.0.1:3333/api/v1"
           axios.post(api + "/signup",{
             username:name,
             email: email,
             password: password, 
           }).then((response) => {
-              console.log(response)
-          });
+            
+          }).catch(function (error) {
+                console.log(error);
+                console.log(error.status);
+                console.log(error);
+            });
       },
     },
 };

@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <!-- el header no cambia porque vue no hace cmabios en tiempo real falta implementar eso.  -->
     <v-toolbar color="primary" app>
       <v-btn flat href="/">
       <v-toolbar-title  class="headline text-uppercase  white--text">
@@ -16,14 +17,18 @@
       <v-icon  style="padding: 5px;" >fas fa-shopping-cart</v-icon>
         <span class="mr-2 white--text">Carrito</span>
       </v-btn>
-      <v-btn v-if="Login=='true'" flat :to="{name:'historial'}">
+      <v-btn v-if="tokenUser!=null" flat :to="{name:'historial'}">
         <span class="mr-2 white--text">Historial</span>
       </v-btn>
-      <v-btn v-if="Login==null" flat :to="{name:'Login'}">
+      <v-btn v-if="tokenUser==null" flat :to="{name:'Login'}">
         <span class="mr-2 white--text">Iniciar sesion</span>
       </v-btn>
-      <v-btn  v-if="Login=='true' " flat :to="{name:'Perfil'}">
+      <v-btn  v-if="tokenUser!=null " flat :to="{name:'Perfil'}">
         <span class="mr-2 white--text">Perfil</span>
+      </v-btn>
+      <!--cerrar sesion no sirve este boton falta todavia implementaer la logica de cerrar sesion -->
+      <v-btn  v-if="tokenUser!=null " flat :to="{name:'Perfil'}">
+        <span class="mr-2 white--text">Cerrar sesion</span>
       </v-btn>
     </v-toolbar>
 
@@ -42,7 +47,7 @@ export default {
   },
   data() {
     return {
-      Login:localStorage.getItem("Login")
+      tokenUser:localStorage.getItem("token")
     };
   },
 };

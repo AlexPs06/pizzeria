@@ -114,7 +114,6 @@ export default  {
           if (localStorage.getItem("tokenNotificaciones")!=null) {
               tokenNotificaciones=localStorage.getItem("tokenNotificaciones");
           }
-
           let api = "http://127.0.0.1:3333/api/v1"
           axios.post(api + "/compras",{
             token:result.token.id,
@@ -131,6 +130,7 @@ export default  {
           } ).then((response) => {
           });
           localStorage.clear()
+          this.$router.push('Home')
 
         });
       },

@@ -4,7 +4,7 @@ const Compra = use("App/Models/Compra")
 const Historial = use("App/Models/Historial")
 
 
-const stripe = require('stripe')('pk_test_AjSflyejK3J7quTKNeWfBY0v00XIuUpWtP');
+const stripe = require('stripe')('sk_test_WPxp1ZDJ23xC0gywfy6S3fgZ00421Q9xmz');
 
 class CompraController {
     async index({ auth, response }) {
@@ -13,8 +13,8 @@ class CompraController {
         return response.json(compras)
     }
 
-    async store({ request, auth, response }) {
-
+    async store({ request, auth,  response }) {
+        
         const compra = new Compra()
         compra.user_id = auth.current.user.id
         compra.token = request.body.token
@@ -36,7 +36,7 @@ class CompraController {
 
         const token = request.body.token;
         try {
-            (async() => {
+            (async () => {
                 const charge = await stripe.charges.create({
                     amount: total * 100,
                     currency: 'mxn',
@@ -60,10 +60,10 @@ class CompraController {
         return response.json(compra)
     }
 
-    async update({ params, auth, request, response }) {
+    async update({ params, auth,  request, response }) {
         const admin = await User.findBy('email', 'admin@admin.com')
 
-        if (auth.current.user.user_type == 'client') {
+        if( auth.current.user.user_type == 'client'){
             await Historial.create(this.logData(admin.id, 6, 400, `El usuario ${auth.current.user.username} con email ${auth.current.user.email} ha intentado modificar datos de alguna compra.`))
             return response.status(400).json({
                 status: 400,
@@ -73,7 +73,7 @@ class CompraController {
 
         const compraInfo = request.only(['token', 'lista', 'direccion', 'referencias', 'telefono', 'nombre', 'correo', 'estatus'])
         const compra = await Compra.find(params.id)
-
+        
         if (!compra) {
             await Historial.create(this.logData(admin.id, 6, 406, `Datos incorrectos para la actualización de la compra.`))
             return response.status(404).json({ data: 'Resource not found' })
@@ -93,7 +93,7 @@ class CompraController {
         return response.status(201).json(compra)
     }
 
-    async delete({ params, auth, response }) {
+    async delete({ params, auth,  response }) {
         const compra = await Compra.find(params.id)
         if (!compra) {
             await Historial.create(this.logData(auth.current.user.id, 6, 406, `Compra no encontrado.`))
