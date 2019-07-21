@@ -9,23 +9,17 @@ const sgMail = require('@sendgrid/mail')
     // KEY = "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"
 sgMail.setApiKey("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");
 
-
-
-
-
 class UserController {
-    //============S=========
     async crearAdmin() {
-            const userData = {
-                username: 'admin',
-                email: 'admin@admin.com',
-                password: 'admin1234',
-                user_type: 1
-            }
-            await User.create(userData)
-            return userData
+        const userData = {
+            username: 'admin',
+            email: 'admin@admin.com',
+            password: 'admin1234',
+            user_type: 1
         }
-        //============S=========
+        await User.create(userData)
+        return userData
+    }
 
 
 

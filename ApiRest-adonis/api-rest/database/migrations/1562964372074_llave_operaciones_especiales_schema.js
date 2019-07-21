@@ -3,20 +3,21 @@
 /** @type {import('@adonisjs/lucid/src/Schema')} */
 const Schema = use('Schema')
 
-class LlaveCambioPasswordSchema extends Schema {
+class LlaveOperacionesEspecialesSchema extends Schema {
   up () {
-    this.create('llave_cambio_passwords', (table) => {
+    this.create('llave_operaciones_especiales', (table) => {
       table.increments()
       table.string('email', 254).notNullable()
       table.string('key', 20).notNullable()
+      table.boolean('check_account').defaultTo(false)
       table.boolean('used').defaultTo(false)
       table.timestamps()
     })
   }
 
   down () {
-    this.drop('llave_cambio_passwords')
+    this.drop('llave_operaciones_especiales')
   }
 }
 
-module.exports = LlaveCambioPasswordSchema
+module.exports = LlaveOperacionesEspecialesSchema
