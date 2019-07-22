@@ -1,7 +1,6 @@
 'use strict'
 const User = use("App/Models/User")
 const Pizza = use("App/Models/Pizza")
-const User = use("App/Models/User")
 const Historial = use("App/Models/Historial")
 
 

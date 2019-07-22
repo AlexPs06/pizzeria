@@ -11,27 +11,6 @@ sgMail.setApiKey( Env.get('SEND_GRID_TOKEN') );
 
 class UserController {
 
-    async crearAdmin({response}) {
-        try {
-            await User.create({
-                username: 'admin',
-                email: 'admin@admin.com',
-                password: 'admin1234',
-                user_type: 1
-            })
-        } catch (e) { }
-
-        try {
-            await User.create({
-                username: 'anonimo', email: 'anonimo@anonimo.com',
-                password: 'anonimo',
-                user_type: 2
-            })
-        } catch (e) { }
-        return response.json({
-            admin: 'creado'
-        })
-    }
     async login({ request, auth, response }) {
 
 

@@ -12,8 +12,10 @@ Route.group(() => {
    */
 
  
-
-  Route.post('crear_admin', 'UserController.crearAdmin')
+  /**    ¡NUEVO!
+   *La ruta Route.post('crear_admin', 'UserController.crearAdmin') 
+   *es inexistente ya que se ha automatizado la creación de admin default
+   */
 
 
 
