@@ -127,10 +127,23 @@ export default  {
             tokenNotificaciones:tokenNotificaciones
             // ngrok http 8080 -host-header="localhost:8080"
 
-          } ).then((response) => {
-          });
-          localStorage.clear()
-          this.$router.push('Home')
+          },
+          {
+            headers:{
+              Authorization:"Bearer "+localStorage.getItem("token"),
+              'Content-Type': "application/json",
+            }
+          }).then((response) => {
+            localStorage.clear()
+            this.$router.push('Home')
+          }).catch(function (error2) {
+              //esta parte es de control de errores hay que modificar el valor del 
+              //error a true para que se muestren no obstante no se como cambiarlo por eso quedo asi 
+              //this.error=true;
+              //this.errorMesage="Usuario o contraseña incorrectos"
+            
+            });
+          
 
         });
       },

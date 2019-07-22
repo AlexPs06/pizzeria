@@ -67,6 +67,10 @@ export default  {
             password: password, 
           }).then((response) => {
               localStorage.setItem("token",response.data.token)
+              localStorage.setItem("username",response.data.user.username)
+              localStorage.setItem("email",response.data.user.email)
+              localStorage.setItem("id",response.data.user.id)
+
               this.$router.push({ path: 'Perfil' })
           }).catch(function (error2) {
               //esta parte es de control de errores hay que modificar el valor del 
