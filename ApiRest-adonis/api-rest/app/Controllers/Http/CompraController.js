@@ -1,18 +1,28 @@
 'use strict'
+
+const Env = use('Env')
 const User = use("App/Models/User")
 const Compra = use("App/Models/Compra")
 const Historial = use("App/Models/Historial")
-
-
-const stripe = require('stripe')('sk_test_WPxp1ZDJ23xC0gywfy6S3fgZ00421Q9xmz');
+const stripe = require('stripe')( Env.get('STRIPE_TOKEN') );
 
 class CompraController {
     async index({ auth, response }) {
-        let compras = await User.query().with('compras').fetch()
+        const admin = await User.findBy('email', 'admin@admin.com')
+        if (auth.current.user.user_type == 'client') {
+            await Historial.create(  this.logData(admin.id, 6, 400, `El Usuario ${auth.current.user.username} con email ${auth.current.user.email} ha intentando acceder a la lista de compras de todos los usuarios.`))
+            return response.status(400).json({
+                status: 400,
+                message: 'Acceso solo a administradores.'
+            })
+        }
+
+        const compras = await User.query().select('id', 'username', 'email', 'locked').with('compras').fetch()
         await Historial.create(this.logData(auth.current.user.id, 6, 200, `Adquisición de lista de compras`))
         return response.json(compras)
     }
 
+    
     async store({ request, auth,  response }) {
         
         const compra = new Compra()
@@ -47,6 +57,7 @@ class CompraController {
             await Historial.create(this.logData(auth.current.user.id, 6, 201, `Compra exitosa de ${total}.`))
 
         } catch (error) {
+            console.log( error )
             await Historial.create(this.logData(auth.current.user.id, 6, 400, `Compra fallida de ${total}. Error desde Stripe.`))
             console.error(error)
         }
@@ -55,8 +66,8 @@ class CompraController {
         return response.status(201).json(compra)
     }
 
-    async show({ params, response }) {
-        const compra = await Compra.find(params.id)
+    async show({ auth, response }) {
+        const compra = await Compra.findBy('user_id', auth.current.user.id)
         return response.json(compra)
     }
 

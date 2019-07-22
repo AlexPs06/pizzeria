@@ -1,58 +1,43 @@
 'use strict'
+
+const Env = use('Env')
+const { validate } = use('Validator')
 const User = use("App/Models/User")
 const Historial = use("App/Models/Historial")
 const LlaveOperacionesEspeciales = use("App/Models/LlaveOperacionesEspeciales")
-
-const { validate } = use('Validator')
-
 const sgMail = require('@sendgrid/mail')
-// sgMail.setApiKey(KEY);
-
-
-
+sgMail.setApiKey( Env.get('SEND_GRID_TOKEN') );
 
 
 class UserController {
-    //============S=========
-    async crearAdmin() {
-        const userData = {
-            username: 'admin',
-            email: 'admin@admin.com',
-            password: 'admin1234',
-            user_type: 1
-        }
+
+    async crearAdmin({response}) {
         try {
-            await User.create(userData)
+            await User.create({
+                username: 'admin',
+                email: 'admin@admin.com',
+                password: 'admin1234',
+                user_type: 1
+            })
+        } catch (e) { }
 
-        } catch (error) {
-        }
-
-        const anonymousUser = {
-            username: 'anonimo', email: 'anonimo@anonimo.com',
-            password: 'anonimo',
-            user_type: 2
-        }
         try {
-            await User.create(anonymousUser)
-        } catch (error) {
-        }
-
-
-        return {
-            admin: userData,
-            anonimo: anonymousUser
-        }
+            await User.create({
+                username: 'anonimo', email: 'anonimo@anonimo.com',
+                password: 'anonimo',
+                user_type: 2
+            })
+        } catch (e) { }
+        return response.json({
+            admin: 'creado'
+        })
     }
-    //============S=========
-
-
-
     async login({ request, auth, response }) {
 
 
         const userData = request.only(['email', 'password'])
         const rules = {
-            email: 'required',
+            email: 'required|email',
             password: 'required'
         }
 
