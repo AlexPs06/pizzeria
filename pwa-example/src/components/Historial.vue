@@ -79,9 +79,14 @@ export default {
     };
   },
   created() {
-    let api = "http://127.0.0.1:3333/api/v1";
-    axios.get(api + "/compras").then(response => {
-      this.pedidos = response.data;
+    const api = "http://127.0.0.1:3333/api/v1";
+    const token = localStorage.getItem('token')
+    const header = {headers: { Authorization: "Bearer " + token } }
+    axios.get(api + "/compras", header )
+    .then(response => {
+      console.log('Tood bien')
+    }).catch(error =>{
+      console.log('Error')
     });
   },
   methods: {
