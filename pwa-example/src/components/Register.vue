@@ -69,12 +69,13 @@ export default  {
             email: email,
             password: password, 
           }).then((response) => {
-            
-          }).catch(function (error) {
-                console.log(error);
-                console.log(error.status);
-                console.log(error);
-            });
+            console.log('Todo bien')
+          }).catch(err => {
+            this.error = true;
+            console.log(err);
+            console.log(err.status);
+            console.log(err);
+          });
       },
     },
 };
