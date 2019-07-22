@@ -66,7 +66,7 @@
 import axios from "axios";
 
 let apiRock= ""
-let apilocal="https://495ec686.ngrok.io"
+let apilocal="http://127.0.0.1:3333"
 
 let api = apilocal+"/api/v1";
 
@@ -107,7 +107,7 @@ export default {
     };
   },
   created() {
-    axios.get("https://495ec686.ngrok.io/api/v1/compras").then(response => {
+    axios.get("http://127.0.0.1:3333/api/v1/compras").then(response => {
       
       //this.pizzas = response.data
       this.pedidos = response.data;

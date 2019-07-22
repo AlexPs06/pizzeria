@@ -114,8 +114,7 @@ export default  {
           if (localStorage.getItem("tokenNotificaciones")!=null) {
               tokenNotificaciones=localStorage.getItem("tokenNotificaciones");
           }
-
-          let api = "https://495ec686.ngrok.io/api/v1"
+          let api = "http://127.0.0.1:3333/api/v1"
           axios.post(api + "/compras",{
             token:result.token.id,
             lista: localStorage.getItem("carrito"),
@@ -128,9 +127,23 @@ export default  {
             tokenNotificaciones:tokenNotificaciones
             // ngrok http 8080 -host-header="localhost:8080"
 
-          } ).then((response) => {
-          });
-          localStorage.clear()
+          },
+          {
+            headers:{
+              Authorization:"Bearer "+localStorage.getItem("token"),
+              'Content-Type': "application/json",
+            }
+          }).then((response) => {
+            localStorage.clear()
+            this.$router.push('Home')
+          }).catch(function (error2) {
+              //esta parte es de control de errores hay que modificar el valor del 
+              //error a true para que se muestren no obstante no se como cambiarlo por eso quedo asi 
+              //this.error=true;
+              //this.errorMesage="Usuario o contraseña incorrectos"
+            
+            });
+          
 
         });
       },
