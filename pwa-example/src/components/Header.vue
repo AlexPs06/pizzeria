@@ -17,17 +17,17 @@
       <v-icon  style="padding: 5px;" >fas fa-shopping-cart</v-icon>
         <span class="mr-2 white--text">Carrito</span>
       </v-btn>
-      <v-btn v-if="this.$store.state.login!=null" flat :to="{name:'historial'}">
+      <v-btn v-if="login=='true' ||this.$store.state.login!=null" flat :to="{name:'historial'}">
         <span class="mr-2 white--text">Historial</span>
       </v-btn>
-      <v-btn v-if="this.$store.state.login==null" flat :to="{name:'Login'}">
+      <v-btn v-if=" login==null && this.$store.state.login==null" flat :to="{name:'Login'}">
         <span class="mr-2 white--text">Iniciar sesion</span>
       </v-btn>
-      <v-btn  v-if="this.$store.state.login!=null " flat :to="{name:'Perfil'}">
+      <v-btn  v-if="login=='true' || this.$store.state.login!=null " flat :to="{name:'Perfil'}">
         <span class="mr-2 white--text">Perfil</span>
       </v-btn>
       <!--cerrar sesion no sirve este boton falta todavia implementaer la logica de cerrar sesion -->
-      <v-btn  v-if="this.$store.state.login!=null " flat >
+      <v-btn  v-if="login=='true' || this.$store.state.login!=null " flat  v-on:click="signdwon()">
         <span class="mr-2 white--text">Cerrar sesion</span>
       </v-btn>
     </v-toolbar>
@@ -47,6 +47,7 @@ export default {
   },
   data() {
     return {
+      login: localStorage.getItem("login"),
     };
   },
   methods:{

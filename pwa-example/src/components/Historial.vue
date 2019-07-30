@@ -50,6 +50,7 @@
 <script>
 import axios from "axios";
 import Vue from "vue";
+import { log } from 'util';
 export default {
   data() {
     return {
@@ -80,9 +81,11 @@ export default {
   },
   created() {
     const api = "https://alfredito-pizzeria.herokuapp.com/api/v1";
+    console.log(localStorage.getItem('token'));
+    
     const token = localStorage.getItem('token')
     const header = {headers: { Authorization: "Bearer " + token } }
-    axios.get(api + "/compras_usuario",{user_id: localStorage.getItem("id")}, header )
+    axios.get(api + "/compras_usuario", header )
     .then(response => {
       console.log('Tood bien')
     }).catch(error =>{

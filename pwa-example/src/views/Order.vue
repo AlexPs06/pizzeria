@@ -62,8 +62,8 @@
         <v-stepper-content step="2">
           <v-form v-model="valid">
             <v-flex xs12 sm6 offset-sm3>
-              <v-btn  flat color="purple" :to="{name: 'carrito'}" v-on:click="añadirCarrito(idAux, precio, masa, tamano, CantidadPizzas )" > <v-icon  style="padding: 5px;" >fas fa-cart-plus</v-icon> Añadir al carrito</v-btn>
-              <v-btn  flat color="blue"  :to="{name: 'pagos'}" v-on:click="añadirCarrito(idAux, precio, masa, tamano, CantidadPizzas )" > <v-icon  style="padding: 5px;" >fab fa-cc-stripe</v-icon> Finalizar compra</v-btn>
+              <v-btn  flat color="purple"  v-on:click="añadirCarrito(idAux, precio, masa, tamano, CantidadPizzas )" > <v-icon  style="padding: 5px;" >fas fa-cart-plus</v-icon> Añadir al carrito</v-btn>
+              <v-btn  flat color="blue"   v-on:click="añadirCarrito2(idAux, precio, masa, tamano, CantidadPizzas )" > <v-icon  style="padding: 5px;" >fab fa-cc-stripe</v-icon> Finalizar compra</v-btn>
               </v-flex>
 
           
@@ -170,6 +170,55 @@ export default  {
 
             
           }
+          this.$router.push('/carrito')            
+
+
+        },
+        añadirCarrito2: function(id,precio, masa, tamano, cantidadPizzas ) {   
+                 
+          if(localStorage.getItem("carrito")!=null){
+            let carrito=JSON.parse(localStorage.getItem("carrito")+"")
+            let item={
+                  id: id,
+                  nombre: this.pizza.nombre,
+                  descripcion: this.pizza.descripcion,
+                  ingredientes: this.pizza.ingredientes,
+                  imagen: this.pizza.imagen,
+                  precio: precio,
+                  masa: masa,
+                  tam: tamano,
+                  cantidadPizzas:cantidadPizzas
+
+            }
+            carrito.push(item) 
+            localStorage.setItem("carrito",JSON.stringify(carrito))
+            console.log("carrito")
+            console.log(carrito)
+
+          }
+          else{
+            let item=[
+                {
+                    id: id,
+                    nombre: this.pizza.nombre,
+                    descripcion: this.pizza.descripcion,
+                    ingredientes: this.pizza.ingredientes,
+                    imagen: this.pizza.imagen,
+                    precio: precio,
+                    masa: masa,
+                    tam: tamano,
+                    cantidadPizzas:cantidadPizzas
+                }
+            ];
+            localStorage.setItem("carrito",JSON.stringify(item))
+            console.log("pizzas")
+            console.log(item)
+
+            
+          }
+          console.log("entre");
+
+          this.$router.push('/pagos')            
 
         },
         calcularPrecio:function(event){
@@ -224,7 +273,7 @@ export default  {
     props:['id'],
     created(){
       this.idAux=this.id
-      let api = "http://127.0.0.1:3333/api/v1"
+      let api = "https://alfredito-pizzeria.herokuapp.com/api/v1"
       axios.get(api + "/pizzas/"+this.id ).then((response) => {
         this.pizza = response.data
         this.precio=this.pizza.precio

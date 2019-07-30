@@ -11,15 +11,11 @@ Route.group(() => {
      * SERÁ NECESARIO ENVIAR EN LA CABECERA EL TOKEN DEL USUARIO
      */
 
-<<<<<<< HEAD
 
-=======
- 
-  /**    ¡NUEVO!
-   *La ruta Route.post('crear_admin', 'UserController.crearAdmin') 
-   *es inexistente ya que se ha automatizado la creación de admin default
-   */
->>>>>>> af876c82a14b2723dbaa88d4ed3167a5704c29bf
+    /**    ¡NUEVO!
+     *La ruta Route.post('crear_admin', 'UserController.crearAdmin') 
+     *es inexistente ya que se ha automatizado la creación de admin default
+     */
 
     Route.post('crear_admin', 'UserController.crearAdmin')
 

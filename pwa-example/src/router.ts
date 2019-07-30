@@ -4,7 +4,10 @@ import Home from './views/Home.vue';
 import Landing from './views/Landing.vue';
 import PizzeriaView from './views/PizzeriaView.vue';
 import Register from './views/Register.vue';
-import Perfil from './views/PerfilUser.vue'
+import Perfil from './views/PerfilUser.vue';
+// import auth from './middleware/auth';
+// import log from './middleware/log';
+
 Vue.use(Router);
 
 export default new Router({
@@ -20,6 +23,9 @@ export default new Router({
       path: '/Perfil',
       name: 'Perfil',
       component: Perfil,
+      // meta: {
+      //   middleware: auth,
+      // },
     },
     {
       path: '/Login',

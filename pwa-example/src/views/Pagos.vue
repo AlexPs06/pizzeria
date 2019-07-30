@@ -83,8 +83,8 @@ export default  {
     data (){
       return{
          pizzas:carrito,
-         email: '',
-         nombre: '',
+         email:localStorage.getItem("email"),
+         nombre: localStorage.getItem("username"),
          telefono: '',
          referencias: '',
          direccion: '',
@@ -114,7 +114,7 @@ export default  {
           if (localStorage.getItem("tokenNotificaciones")!=null) {
               tokenNotificaciones=localStorage.getItem("tokenNotificaciones");
           }
-          let api = "http://127.0.0.1:3333/api/v1"
+          let api = "https://alfredito-pizzeria.herokuapp.com/api/v1"
           axios.post(api + "/compras",{
             token:result.token.id,
             lista: localStorage.getItem("carrito"),
@@ -134,7 +134,17 @@ export default  {
               'Content-Type': "application/json",
             }
           }).then((response) => {
+            let token = localStorage.getItem("token")
+            let username = localStorage.getItem("username")
+            let email = localStorage.getItem("email")
+            let id = localStorage.getItem("id")
+            let login = localStorage.getItem("login")
             localStorage.clear()
+            localStorage.setItem("token",token)
+            localStorage.setItem("username",username)
+            localStorage.setItem("email",email)
+            localStorage.setItem("id",id)
+            localStorage.setItem("login","true")
             this.$router.push('Home')
           }).catch(function (error2) {
               //esta parte es de control de errores hay que modificar el valor del 
