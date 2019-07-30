@@ -8,7 +8,7 @@
         <span class="font-weight-light"
         
         >
-        Upizza</span>
+        Upizza </span>
         
       </v-toolbar-title>
       </v-btn>
@@ -17,17 +17,17 @@
       <v-icon  style="padding: 5px;" >fas fa-shopping-cart</v-icon>
         <span class="mr-2 white--text">Carrito</span>
       </v-btn>
-      <v-btn v-if="tokenUser!=null" flat :to="{name:'historial'}">
+      <v-btn v-if="this.$store.state.login!=null" flat :to="{name:'historial'}">
         <span class="mr-2 white--text">Historial</span>
       </v-btn>
-      <v-btn v-if="tokenUser==null" flat :to="{name:'Login'}">
+      <v-btn v-if="this.$store.state.login==null" flat :to="{name:'Login'}">
         <span class="mr-2 white--text">Iniciar sesion</span>
       </v-btn>
-      <v-btn  v-if="tokenUser!=null " flat :to="{name:'Perfil'}">
+      <v-btn  v-if="this.$store.state.login!=null " flat :to="{name:'Perfil'}">
         <span class="mr-2 white--text">Perfil</span>
       </v-btn>
       <!--cerrar sesion no sirve este boton falta todavia implementaer la logica de cerrar sesion -->
-      <v-btn  v-if="tokenUser!=null " flat :to="{name:'Perfil'}">
+      <v-btn  v-if="this.$store.state.login!=null " flat >
         <span class="mr-2 white--text">Cerrar sesion</span>
       </v-btn>
     </v-toolbar>
@@ -39,7 +39,7 @@
 </template>
 
 <script>
-
+  
 export default {
   name: 'App',
   components: {
@@ -47,8 +47,14 @@ export default {
   },
   data() {
     return {
-      tokenUser:localStorage.getItem("token")
     };
   },
+  methods:{
+    signdwon() {
+        localStorage.clear()
+        this.$store.state.login=null;
+        this.$router.push({ path: 'Login' })
+    },
+  }
 };
 </script>

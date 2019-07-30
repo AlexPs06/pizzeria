@@ -20,7 +20,6 @@ messaging.usePublicVapidKey("BIzrnFVjacOco8ZzJ8DADw6WTNyFxBQzi5ZGAoErLP7XaLV_W2l
 messaging.requestPermission().then(()=>{
   console.log("persmiso concedido")
   messaging.getToken().then((token)=>{
-    console.log(token)
     localStorage.setItem("tokenNotificaciones", token+"")
   });
 }).catch((err)=>{

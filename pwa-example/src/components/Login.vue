@@ -10,7 +10,7 @@
                 <v-flex xs12 sm8 md4>
                     <v-card class="elevation-12">
                     <v-toolbar dark color="primary">
-                        <v-toolbar-title>Crear cuenta</v-toolbar-title>
+                        <v-toolbar-title>Iniciar sesion</v-toolbar-title>
                         <v-spacer></v-spacer>
                     </v-toolbar>
                     <v-card-text>
@@ -61,7 +61,7 @@ export default  {
       Login(email, password) {
   
 
-        let api = "http://127.0.0.1:3333/api/v1"
+        let api = "https://alfredito-pizzeria.herokuapp.com/api/v1"
           axios.post(api + "/login",{
             email: email,
             password: password, 
@@ -70,7 +70,7 @@ export default  {
               localStorage.setItem("username",response.data.user.username)
               localStorage.setItem("email",response.data.user.email)
               localStorage.setItem("id",response.data.user.id)
-
+              this.$store.state.login=true;
               this.$router.push({ path: 'Perfil' })
           }).catch(function (error2) {
               //esta parte es de control de errores hay que modificar el valor del 

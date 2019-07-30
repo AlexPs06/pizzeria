@@ -79,14 +79,15 @@ export default {
     };
   },
   created() {
-    const api = "http://127.0.0.1:3333/api/v1";
+    const api = "https://alfredito-pizzeria.herokuapp.com/api/v1";
     const token = localStorage.getItem('token')
     const header = {headers: { Authorization: "Bearer " + token } }
-    axios.get(api + "/compras", header )
+    axios.get(api + "/compras_usuario",{user_id: localStorage.getItem("id")}, header )
     .then(response => {
       console.log('Tood bien')
     }).catch(error =>{
       console.log('Error')
+      console.log(error)
     });
   },
   methods: {
