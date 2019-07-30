@@ -15,6 +15,32 @@ class UserSchema extends Schema {
       table.integer('intents').unsigned().defaultTo(0)
       table.timestamps()
     })
+
+
+    this.schedule(async (trx) => {
+
+      const User = use("App/Models/User")
+      const existAdmin = await User.findBy('email', 'admin@admin.com')
+      if (existAdmin === null) {
+        await User.create({
+          username: 'admin',
+          email: 'admin@admin.com',
+          password: 'admin1234',
+          user_type: 1
+        })
+      }
+
+      const existAnonymous = await User.findBy('email', 'anonimo@anonimo.com')
+      if (existAnonymous === null) {
+        await User.create({
+          username: 'anonimo',
+          email: 'anonimo@anonimo.com',
+          password: 'anonimo0000000000anonimo'
+        })
+      }
+    
+    })
+
   }
 
   down () {
