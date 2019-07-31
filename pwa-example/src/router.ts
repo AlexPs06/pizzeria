@@ -5,6 +5,7 @@ import Landing from './views/Landing.vue';
 import PizzeriaView from './views/PizzeriaView.vue';
 import Register from './views/Register.vue';
 import Perfil from './views/PerfilUser.vue';
+import RecuperarContraseña from './views/RecuperarContraseña.vue';
 // import auth from './middleware/auth';
 // import log from './middleware/log';
 
@@ -18,6 +19,11 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home,
+    },
+    {
+      path: '/RecuperarContraseña',
+      name: 'RecuperarContraseña',
+      component: RecuperarContraseña,
     },
     {
       path: '/Perfil',

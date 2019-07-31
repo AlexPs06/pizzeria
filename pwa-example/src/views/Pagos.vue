@@ -122,7 +122,7 @@ export default  {
           
           axios.post(api + "/compras",{
             token:result.token.id,
-            lista: JSON.stringify(localStorage.getItem("carrito")),
+            lista: localStorage.getItem("carrito"),
             direccion:direccion,
             referencias:referencias,
             telefono:telefono,
@@ -156,17 +156,6 @@ export default  {
               Authorization:"Bearer "+localStorage.getItem("token"),
               'Content-Type': "application/json",
               }
-              console.log("token "+result.token.id);
-              console.log("lista"+ JSON.stringify( localStorage.getItem("carrito") ));
-              console.log("direccion"+ direccion);
-              console.log("referencias"+ referencias);
-              console.log("nombre"+ nombre);
-              console.log("correo"+ email);
-              console.log("estatus" + "Pedida");
-              console.log("tokenNotificaciones" +tokenNotificaciones);
-            
-              console.log(headers)
-
               this.error=true;
               this.errorMesage=error2.response.data.warning;
               setTimeout(() => this.error=false, 3000);
