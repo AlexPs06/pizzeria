@@ -3,7 +3,8 @@
     <div class="Login">
         <v-content>
             <v-alert v-if="error" :value="true" type="error" dismissible transition="scale-transition" >
-                Correo o contraseña incorrectos
+                <!-- Correo o contraseña incorrectos -->
+                {{errorMesage}}
             </v-alert>
             <v-container fluid fill-height>
                 <v-layout align-center justify-center>
@@ -69,7 +70,7 @@
                 <v-spacer></v-spacer>
                 <!-- <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn> -->
                 <v-btn color="blue darken-1" v-if="codigo!=''"   text @click="recoveryAcount(codigo)">Siguiente</v-btn>
-                <v-btn color="blue darken-1" v-if="codigo==''" disabled  >Save</v-btn>
+                <v-btn color="blue darken-1" v-if="codigo==''" disabled  >Continuar</v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -109,17 +110,24 @@ export default  {
               localStorage.setItem("login","true")
               this.$store.state.login=true;
               this.$router.push({ path: 'Perfil' })
-          }).catch(function (error2) {
-              console.log(error2);
-              
-              //esta parte es de control de errores hay que modificar el valor del 
-              //error a true para que se muestren no obstante no se como cambiarlo por eso quedo asi 
-              //this.error=true;
-              //this.errorMesage="Usuario o contraseña incorrectos"
+          }).catch((error2)  =>{
+              console.log(error2.response.data);
+              console.log(error2.response.data.warning== "Cuenta bloqueada. Te hemos enviado el código de verificación de cuenta a tu correo.");
+              if (error2.response.data.warning== "Cuenta bloqueada. Te hemos enviado el código de verificación de cuenta a tu correo.") {
+                this.error=true;
+                this.errorMesage="Cuenta bloqueada. Te hemos enviado el código de verificación de cuenta a tu correo."
+                setTimeout(() => this.dialog=true, 2000);
+
+              }else{
+                this.error = true;
+                this.errorMesage=error2.response.data.warning+" "
+                if (error2.response.data.more[0].message) {
+                  this.errorMesage=this.errorMesage+" "+error2.response.data.more[0].message
+                }
+                setTimeout(() => this.error=false, 3000);
+              }
             
             });
-        this.error=true
-        setTimeout(() => this.error=false, 3000);
 
         
       },

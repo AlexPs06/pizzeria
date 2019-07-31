@@ -2,8 +2,8 @@
 
  <v-layout row>
     <v-flex xs12 sm6 offset-sm3>
-       <v-alert :value="alert" type="success"  transition="scale-transition" >
-        Cambio realizado exitosamente
+       <v-alert :value="alert" :type="estatus"  transition="scale-transition" >
+        {{mensaje}}
         </v-alert>
       <v-card>
         <v-img
@@ -106,7 +106,7 @@ import axios from "axios";
 export default  {
   data() {
     return{
-      mensaje: 'hola ',
+      mensaje:"",
       name:localStorage.getItem("username"),
       email:localStorage.getItem("email"),
       dialog: false,
@@ -119,7 +119,7 @@ export default  {
       show3:false,
       alert:false,
       nameConfirm:"",
-
+      estatus: null
     };
   },
   methods:{
@@ -138,13 +138,22 @@ export default  {
             }
           }).then((response) => {
             console.log(response);
-            
-          }).catch(function (error2) {
-            
+            this.dialog=false;
+            this.mensaje="Cambio realizado exitosamente"
+            this.alert = true;
+            this.estatus="success"
+            setTimeout(() => this.alert=false, 3000);
+          }).catch( (error2) => {
+            this.dialog=false;
+            this.name=name;
+            this.alert = true;
+            this.estatus="error"
+            if(error2.response){
+              this.mensaje=error2.response.data.warning
+            }
+            setTimeout(() => this.alert=false, 3000);
             });
-          this.dialog=false
-          this.alert = true
-        setTimeout(() => this.alert=false, 3000);
+          
       },
       changeName(name) {
         let api = "https://alfredito-pizzeria.herokuapp.com/api/v1"
@@ -159,14 +168,23 @@ export default  {
           }).then((response) => {
             console.log(response);
             localStorage.setItem("username",name)
-            
-          }).catch(function (error2) {
-            
+            this.dialog2=false;
+            this.mensaje="Cambio realizado exitosamente"
+            this.alert = true;
+            this.estatus="success"
+            setTimeout(() => this.alert=false, 3000);
+
+          }).catch( (error2)=> {
+            this.dialog2=false;
+            this.name=name;
+            this.alert = true;
+            if(error2.response){
+              this.mensaje=error2.response.data.warning
+            }
+            this.estatus="error"
+            setTimeout(() => this.alert=false, 3000);
             });
-            this.dialog2=false
-          this.name=name;
-          this.alert = true
-        setTimeout(() => this.alert=false, 3000);
+            
       },
     },
 };

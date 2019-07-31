@@ -82,12 +82,13 @@ export default  {
               
               this.$router.push({ path: 'Perfil' })
             console.log('Todo bien')
-          }).catch(err => {
+          }).catch(error2 => {
             this.error = true;
-            this.errorMesage="error en la creacion del usuario"
-            console.log(err);
-            console.log(err.status);
-            console.log(err);
+            this.errorMesage=error2.response.data.warning
+            if (error2.response.data.more[0].message) {
+              this.errorMesage=this.errorMesage+" "+error2.response.data.more[0].message
+            }
+            setTimeout(() => this.error=false, 3000);
           });
       },
     },
