@@ -31,26 +31,38 @@
   </div>
 </template>
 
-<script>
+<script lang="js">
 import Vue from 'vue'
-  let carrito = JSON.parse(localStorage.getItem('carrito')+"")
+  
 export default {
   data() {
     return {
-      ordenes: null,
+      carrito: JSON.parse(localStorage.getItem('carrito')+""),
+      ordenes:null
     }
   }, created() {
-    if(this.ordenes != null){
+    
+    if(this.carrito != null){
       this.ordenes = []
-      console.log("Carro", carrito)
-      carrito.forEach(element => {
+      console.log("Carro", this.carrito)
+      this.carrito.forEach(element => {
           this.ordenes.push(element)
       });      
     }
   }, methods:{
       borrarCarrito(){
+          let token = localStorage.getItem("token")
+          let username = localStorage.getItem("username")
+          let email = localStorage.getItem("email")
+          let id = localStorage.getItem("id")
+          let login = localStorage.getItem("login")
           localStorage.clear()
-          this.ordenes = []
+          localStorage.setItem("token",token)
+          localStorage.setItem("username",username)
+          localStorage.setItem("email",email)
+          localStorage.setItem("id",id)
+          localStorage.setItem("login","true")
+          this.carrito = null
       }
   }
 }

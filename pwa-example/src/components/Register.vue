@@ -18,8 +18,8 @@
                         <v-text-field v-model="name" prepend-icon="person" name="nombre" label="Nombre" type="text"></v-text-field>
 
                         <v-text-field v-model="email" prepend-icon="email" name="correo" label="Correo" type="text"></v-text-field>
-                        <v-text-field v-model="password" prepend-icon="lock" name="password" label="Password" id="password" type="password"></v-text-field>
-                        <v-text-field v-model="passwordConfirm" prepend-icon="lock" name="password" label="Confirmar contraseña" id="passwordConfirm" type="password"></v-text-field>
+                        <v-text-field v-model="password" :rules="[v => v.length > 6 || 'Minimo 6 caracteres']"  prepend-icon="lock" name="password" label="Password" id="password"   :append-icon="show2 ? 'visibility' : 'visibility_off'"   :type="show2 ? 'text' : 'password'" @click:append="show2 = !show2"></v-text-field>
+                        <v-text-field v-model="passwordConfirm" prepend-icon="lock" name="password" label="Confirmar contraseña" id="passwordConfirm"  :append-icon="show ? 'visibility' : 'visibility_off'"   :type="show ? 'text' : 'password'" @click:append="show = !show"></v-text-field>
                         
                         </v-form>
                     </v-card-text>
@@ -55,23 +55,36 @@ export default  {
       mensaje: 'hola ',
       name:null,
       email:null,
-      password:null,
+      password:"",
       passwordConfirm:null,
       error:false,
       errorMesage:"",
+      show:false,
+      show2:false
     };
   },
   methods:{
       signup(name, email, password, passwordConfirm) {
-        let api = "http://127.0.0.1:3333/api/v1"
+            this.error = false;
+
+        let api = "https://alfredito-pizzeria.herokuapp.com/api/v1"
           axios.post(api + "/signup",{
             username:name,
             email: email,
             password: password, 
           }).then((response) => {
+            localStorage.setItem("token",response.data.token)
+              localStorage.setItem("username",response.data.user.username)
+              localStorage.setItem("email",response.data.user.email)
+              localStorage.setItem("id",response.data.user.id)
+              this.$store.state.login=true;
+              localStorage.setItem("login","true")
+              
+              this.$router.push({ path: 'Perfil' })
             console.log('Todo bien')
           }).catch(err => {
             this.error = true;
+            this.errorMesage="error en la creacion del usuario"
             console.log(err);
             console.log(err.status);
             console.log(err);

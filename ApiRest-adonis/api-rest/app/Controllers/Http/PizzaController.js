@@ -1,13 +1,13 @@
 'use strict'
 const User = use("App/Models/User")
 const Pizza = use("App/Models/Pizza")
-const User = use("App/Models/User")
 const Historial = use("App/Models/Historial")
 
 
 class PizzaController {
     async index({ response }) {
         let pizzas = await Pizza.all()
+        console.log(pizzas)
         return response.json(pizzas)
     }
 

@@ -8,7 +8,7 @@
         <span class="font-weight-light"
         
         >
-        Upizza</span>
+        Upizza </span>
         
       </v-toolbar-title>
       </v-btn>
@@ -17,18 +17,18 @@
       <v-icon  style="padding: 5px;" >fas fa-shopping-cart</v-icon>
         <span class="mr-2 white--text">Carrito</span>
       </v-btn>
-      <v-btn v-if="tokenUser!=null" flat :to="{name:'historial'}">
+      <v-btn v-if="login=='true' ||this.$store.state.login!=null" flat :to="{name:'historial'}">
         <span class="mr-2 white--text">Historial</span>
       </v-btn>
-      <v-btn v-if="tokenUser==null" flat :to="{name:'Login'}">
+      <v-btn v-if=" login==null && this.$store.state.login==null" flat :to="{name:'Login'}">
         <span class="mr-2 white--text">Iniciar sesion</span>
       </v-btn>
-      <v-btn  v-if="tokenUser!=null " flat :to="{name:'Perfil'}">
+      <v-btn  v-if="login=='true' || this.$store.state.login!=null " flat :to="{name:'Perfil'}">
         <span class="mr-2 white--text">Perfil</span>
       </v-btn>
       <!--cerrar sesion no sirve este boton falta todavia implementaer la logica de cerrar sesion -->
-      <v-btn  v-if="tokenUser!=null " flat :to="{name:'Perfil'}">
-        <span class="mr-2 white--text" v-on:click="SignOff()" >Cerrar sesion</span>
+      <v-btn  v-if="login=='true' || this.$store.state.login!=null " flat  v-on:click="signdwon()">
+        <span class="mr-2 white--text">Cerrar sesion</span>
       </v-btn>
     </v-toolbar>
 
@@ -39,7 +39,7 @@
 </template>
 
 <script>
-
+  
 export default {
   name: 'App',
   components: {
@@ -47,13 +47,21 @@ export default {
   },
   data() {
     return {
-      tokenUser:localStorage.getItem("token")
+      login: localStorage.getItem("login"),
     };
   },
   methods:{
+<<<<<<< HEAD
     SignOff(){
       console.log('SignOff');
     }
+=======
+    signdwon() {
+        localStorage.clear()
+        this.$store.state.login=null;
+        this.$router.push({ path: 'Login' })
+    },
+>>>>>>> b2987a106b981f918d5950fe92979a0fb291d3d5
   }
 };
 </script>
