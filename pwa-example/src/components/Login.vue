@@ -59,26 +59,18 @@ export default  {
   },
   methods:{
       Login(email, password) {
-  
-
-        let api = "http://127.0.0.1:3333/api/v1"
-          axios.post(api + "/login",{
-            email: email,
-            password: password, 
-          }).then((response) => {
-              localStorage.setItem("token",response.data.token)
-              localStorage.setItem("username",response.data.user.username)
-              localStorage.setItem("email",response.data.user.email)
-              localStorage.setItem("id",response.data.user.id)
-
-              this.$router.push({ path: 'Perfil' })
-          }).catch(function (error2) {
-              //esta parte es de control de errores hay que modificar el valor del 
-              //error a true para que se muestren no obstante no se como cambiarlo por eso quedo asi 
-              //this.error=true;
-              //this.errorMesage="Usuario o contraseña incorrectos"
-            
-            });
+        const api = "http://127.0.0.1:3333/api/v1"
+        const json = { "email": email, "password": password }
+        axios.post(api + "/login",json).then((response) => {
+            localStorage.setItem("token",response.data.token)
+            localStorage.setItem("username",response.data.user.username)
+            localStorage.setItem("email",response.data.user.email)
+            localStorage.setItem("id",response.data.user.id)
+            this.$router.push({ path: 'Perfil' })
+        }).catch(function (error) {
+            console.log('Error')
+            console.log(error)
+        });
         
       },
     },

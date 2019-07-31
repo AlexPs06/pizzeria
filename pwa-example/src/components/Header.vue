@@ -28,7 +28,7 @@
       </v-btn>
       <!--cerrar sesion no sirve este boton falta todavia implementaer la logica de cerrar sesion -->
       <v-btn  v-if="tokenUser!=null " flat :to="{name:'Perfil'}">
-        <span class="mr-2 white--text">Cerrar sesion</span>
+        <span class="mr-2 white--text" v-on:click="SignOff()" >Cerrar sesion</span>
       </v-btn>
     </v-toolbar>
 
@@ -50,5 +50,10 @@ export default {
       tokenUser:localStorage.getItem("token")
     };
   },
+  methods:{
+    SignOff(){
+      console.log('SignOff');
+    }
+  }
 };
 </script>

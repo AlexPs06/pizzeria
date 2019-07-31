@@ -1,0 +1,11 @@
+{   "status":201,
+    "user":{
+        "username":"augusto ruiz",
+        "email":"augustorucle@gmail.com",
+        "password":"$2a$10$78U0mmSiMeZWAnKzWwVrp.xIgUsSFGP.0fq5VAqiw.fH/uhqPRq3i",
+        "created_at":"2019-07-22 09:11:54",
+        "updated_at":"2019-07-22 09:11:54",
+        "id":1
+    },
+    "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU2MzgwNDcxNH0.Utl2s1WmrlCheh1tW_1Oe3kUGh2Mfu4dolhkXzrNTpw"
+}
