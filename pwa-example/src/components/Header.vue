@@ -26,7 +26,7 @@
       <v-btn  v-if="login=='true' || this.$store.state.login!=null " flat :to="{name:'Perfil'}">
         <span class="mr-2 white--text">Perfil</span>
       </v-btn>
-      <v-btn  v-if="login=='true' || this.$store.state.login!=null " flat :to="{name:'Pizza'}">
+      <v-btn  v-if="login=='true' || this.$store.state.login!=null " flat :to="{name:'pizza'}">
         <span class="mr-2 white--text">Pizzas</span>
       </v-btn>
       <!--cerrar sesion no sirve este boton falta todavia implementaer la logica de cerrar sesion -->

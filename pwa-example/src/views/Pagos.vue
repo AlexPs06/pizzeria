@@ -2,7 +2,9 @@
 
 <!-- v-for="{id,nombre, ingredientes, imagen, descripcion, precio} in pizzas" v-bind:key="id" -->
   <div class="text-xs-center">  
-     
+     <v-alert v-if="error" :value="true" type="error" dismissible transition="scale-transition" >
+                {{errorMesage}}
+      </v-alert>
       <v-layout style="padding: 10px;" v-for="{id,nombre, ingredientes, imagen, descripcion, precio,cantidadPizzas} in pizzas" v-bind:key="id"  >
 
         <v-flex xs12 sm6 offset-sm3>
@@ -89,6 +91,7 @@ export default  {
          referencias: '',
          direccion: '',
          valid: false,
+         error:false,
       };
     },
     mounted() {
@@ -108,6 +111,7 @@ export default  {
     },
     methods:{
       purchase(email,nombre, telefono, referencias,direccion,precio) {
+
         stripe.createToken(card).then(function(result) {
           console.log(result.token.id)
           let tokenNotificaciones=null 
@@ -115,6 +119,7 @@ export default  {
               tokenNotificaciones=localStorage.getItem("tokenNotificaciones");
           }
           let api = "https://alfredito-pizzeria.herokuapp.com/api/v1"
+          
           axios.post(api + "/compras",{
             token:result.token.id,
             lista: localStorage.getItem("carrito"),
@@ -125,8 +130,6 @@ export default  {
             correo:email,
             estatus: "Pedida",
             tokenNotificaciones:tokenNotificaciones
-            // ngrok http 8080 -host-header="localhost:8080"
-
           },
           {
             headers:{
@@ -146,11 +149,17 @@ export default  {
             localStorage.setItem("id",id)
             localStorage.setItem("login","true")
             this.$router.push('Home')
-          }).catch(function (error2) {
+          }).catch((error2) => {
               //esta parte es de control de errores hay que modificar el valor del 
               //error a true para que se muestren no obstante no se como cambiarlo por eso quedo asi 
-              //this.error=true;
-              //this.errorMesage="Usuario o contraseña incorrectos"
+              let headers={
+              Authorization:"Bearer "+localStorage.getItem("token"),
+              'Content-Type': "application/json",
+              }
+              this.error=true;
+              this.errorMesage=error2.response.data.warning;
+              setTimeout(() => this.error=false, 3000);
+
             
             });
           

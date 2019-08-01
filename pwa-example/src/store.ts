@@ -6,7 +6,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   //All the components know this change
   state: {
-    login:null
+    login:null,
   },
   mutations: {
 
