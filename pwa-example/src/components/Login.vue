@@ -255,7 +255,7 @@ export default  {
       let api = "https://alfredito-pizzeria.herokuapp.com/api/v1"
           axios.post(api + "/recovery_password/cambiar",{
             email: email,
-            password:codigoContraseña,
+            password:newPassword,
             key: codigoContraseña
           }).then((response) => {
           this.$router.replace({ path: 'Login' })

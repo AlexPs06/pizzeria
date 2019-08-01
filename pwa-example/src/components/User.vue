@@ -137,7 +137,6 @@ export default  {
               'Content-Type': "application/json",
             }
           }).then((response) => {
-            console.log(response);
             this.dialog=false;
             this.mensaje="Cambio realizado exitosamente"
             this.alert = true;
@@ -166,12 +165,12 @@ export default  {
               'Content-Type': "application/json",
             }
           }).then((response) => {
-            console.log(response);
             localStorage.setItem("username",name)
             this.dialog2=false;
             this.mensaje="Cambio realizado exitosamente"
             this.alert = true;
             this.estatus="success"
+            this.name=name
             setTimeout(() => this.alert=false, 3000);
 
           }).catch( (error2)=> {
