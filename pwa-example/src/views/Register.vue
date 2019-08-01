@@ -2,10 +2,7 @@
   <div class="Register">
     <!-- <v-img :src="'http://historiasdesobremesa.files.wordpress.com/2013/05/pizzas-dominos.jpg'"> -->
     <Register />
-
-    
     <!-- </v-img> -->
-
   </div>
 </template>
 
