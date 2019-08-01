@@ -177,6 +177,9 @@ export default  {
             email: email,
             password: password, 
           }).then((response) => {
+              if(response.data.user.user_type=="admin"){
+                localStorage.setItem("admin","true") 
+              }
               localStorage.setItem("token",response.data.token)
               localStorage.setItem("username",response.data.user.username)
               localStorage.setItem("email",response.data.user.email)
