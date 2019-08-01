@@ -26,6 +26,9 @@
       <v-btn  v-if="login=='true' || this.$store.state.login!=null " flat :to="{name:'Perfil'}">
         <span class="mr-2 white--text">Perfil</span>
       </v-btn>
+      <v-btn  v-if="login=='true' || this.$store.state.login!=null " flat :to="{name:'Pizza'}">
+        <span class="mr-2 white--text">Pizzas</span>
+      </v-btn>
       <!--cerrar sesion no sirve este boton falta todavia implementaer la logica de cerrar sesion -->
       <v-btn  v-if="login=='true' || this.$store.state.login!=null " flat  v-on:click="signdwon()">
         <span class="mr-2 white--text">Cerrar sesion</span>
@@ -51,17 +54,11 @@ export default {
     };
   },
   methods:{
-<<<<<<< HEAD
-    SignOff(){
-      console.log('SignOff');
-    }
-=======
     signdwon() {
         localStorage.clear()
         this.$store.state.login=null;
         this.$router.push({ path: 'Login' })
     },
->>>>>>> b2987a106b981f918d5950fe92979a0fb291d3d5
   }
 };
 </script>
