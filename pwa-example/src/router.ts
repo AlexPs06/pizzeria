@@ -5,6 +5,8 @@ import Landing from './views/Landing.vue';
 import PizzeriaView from './views/PizzeriaView.vue';
 import Register from './views/Register.vue';
 import Perfil from './views/PerfilUser.vue';
+import Pizza from './views/Pizza.vue';
+
 // import auth from './middleware/auth';
 // import log from './middleware/log';
 
@@ -18,6 +20,11 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home,
+    },
+    {
+      path: '/Pizza',
+      name: 'pizza',
+      component: Pizza,
     },
     {
       path: '/Perfil',
