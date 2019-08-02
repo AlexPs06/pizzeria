@@ -77,7 +77,7 @@
 
 <script>
   const URL = 'https://alfredito-pizzeria.herokuapp.com/api/v1'
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU2NDU0NDUxM30.bVdlORike-Y2YYWxE8piwyO-hPT5w5k2Tq-djny1vl8'
+  const token = localStorage.getItem('token')
   
   import axios from 'axios';
   
