@@ -57,7 +57,7 @@ export default {
     signdwon() {
         localStorage.clear()
         this.$store.state.login=null;
-        this.$router.push({ path: 'Login' })
+        this.$router.replace( 'Login' )
     },
   }
 };

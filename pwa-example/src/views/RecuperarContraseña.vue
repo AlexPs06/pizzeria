@@ -2,6 +2,9 @@
 
     <div >
       <v-stepper v-model="e1">
+        <v-alert v-if="errorGetCodeContraseña" :value="true" :type="tipo"  dismissible transition="scale-transition" >
+        {{errorMesage}}
+        </v-alert>
     <v-stepper-header>
       <v-stepper-step :complete="e1 > 1" step="1">Correo</v-stepper-step>
 
@@ -15,9 +18,7 @@
       <v-divider></v-divider>
 
       <v-stepper-step step="4">Nueva contraseña</v-stepper-step>
-      <v-alert v-if="errorGetCode" :value="true" :type="tipo"  dismissible transition="scale-transition" >
-        {{errorMesage}}
-        </v-alert>
+      
     </v-stepper-header>
 
     <v-stepper-items  >
@@ -32,7 +33,7 @@
                   <v-layout wrap>
                     
                     <v-flex xs12>
-                      <v-text-field v-model="correo"  prepend-icon="email" label="correo*"   required></v-text-field>
+                      <v-text-field v-model="email"  prepend-icon="email" label="correo*"   required></v-text-field>
                     </v-flex>
                     <small>*Campos requeridos</small>
                     
@@ -45,9 +46,13 @@
                 <!-- <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn> -->
               </v-card-actions>
             </v-card>
-        <v-btn color="primary" @click="e1 = 2" >
+        <v-btn v-if="email!=''" color="primary" @click="enviarCodigoContraseña(email)" >
           Continue
         </v-btn>
+        <v-btn v-else color="primary" disabled  >
+          Continue
+        </v-btn>
+
         <v-btn text>Cancel</v-btn>
       </v-stepper-content>
 
@@ -75,7 +80,7 @@
                 <!-- <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn> -->
                 
                 <h4 class="subheading">¿No te llego un correo? 
-                     <v-btn color="blue darken-1" flat @click="reenviarCodigo(email)" >
+                     <v-btn color="blue darken-1" flat @click="reenviarCodigoContraseña(email)" >
                         <span class="mr-2 black--text">Reenviar</span>
                     </v-btn>
                 
@@ -86,6 +91,15 @@
 
 
         <v-btn
+          v-if="codigo!=''"
+          color="primary"
+          @click="e1=3"
+        >
+          Continue
+        </v-btn>
+        <v-btn 
+          v-else
+          disabled
           color="primary"
           @click="e1 = 3"
         >
@@ -125,7 +139,7 @@
         <v-btn
           v-if=" newPassword!=''"
           color="primary"
-          @click="e1 = 4"
+          @click="verificarCodigoContraseña(newPassword,codigo, email)"
         >
           Continue
         </v-btn>
@@ -141,20 +155,32 @@
       </v-stepper-content>
 
       <v-stepper-content step="4">
-        <v-card
-          class="mb-12"
-          color="grey lighten-1"
-          height="200px"
-        ></v-card>
+        <v-card>
+              <v-card-title>
+                <span class="headline">Contraseña cambiada con exito</span>
+              </v-card-title>
+              <v-card-text>
+                <span>Ahora puede iniciar sesión con la nueva contraseña</span>
+                <v-container grid-list-md>
+                  <v-layout wrap>
+                  </v-layout>
+                </v-container>
+              </v-card-text>
+
+              <v-card-actions>
+                <v-spacer></v-spacer>
+               
+              </v-card-actions>
+            </v-card>
 
         <v-btn
           color="primary"
+          :to="{name:'Login'}"
           @click="e1 = 4"
         >
-          Continue
+          Iniciar sesión
         </v-btn>
 
-        <v-btn @click="e1 = 3" text>Cancel</v-btn>
       </v-stepper-content>
 
 
@@ -171,16 +197,80 @@ export default  {
   data() {
     return{
         e1: 0,
-        correo:"",
-        errorGetCode:false,
+        email:"",
+        errorGetCodeContraseña:false,
         errorMesage:"",
         codigo:"",
         newPassword:"",
         show: false,
+        tipo:"error",
     };
   },
   methods:{
-     
+     reenviarCodigoContraseña(email){
+
+        let api = "https://alfredito-pizzeria.herokuapp.com/api/v1"
+          axios.post(api + "/recovery_password/codigo_de_cambio",{
+            email: email,
+          }).then((response) => {
+          console.log("si envie codigo contraseña");
+              
+          }).catch((error2)  =>{
+              if (error2.response) {
+                this.tipo="error"
+                this.errorGetCodeContraseña = true;
+                this.errorMesage=error2.response.data.warning+" "
+                if (error2.response.data.more) {
+                  this.errorMesage=this.errorMesage+" "+error2.response.data.more[0].message
+                }
+                setTimeout(() => this.errorGetCodeContraseña=false, 5000);
+              }
+            
+            });
+      },
+      enviarCodigoContraseña(email){
+
+        let api = "https://alfredito-pizzeria.herokuapp.com/api/v1"
+          axios.post(api + "/recovery_password/codigo_de_cambio",{
+            email: email,
+          }).then((response) => {
+          console.log("si envie codigo contraseña");
+              this.e1=2;
+          }).catch((error2)  =>{
+              if (error2.response) {
+                this.tipo="error"
+                this.errorGetCodeContraseña = true;
+                this.errorMesage=error2.response.data.warning+" "
+                if (error2.response.data.more) {
+                  this.errorMesage=this.errorMesage+" "+error2.response.data.more[0].message
+                }
+                setTimeout(() => this.errorGetCodeContraseña=false, 5000);
+              }
+            
+            });
+      },
+      verificarCodigoContraseña(newPassword,codigoContraseña, email){
+      let api = "https://alfredito-pizzeria.herokuapp.com/api/v1"
+          axios.post(api + "/recovery_password/cambiar",{
+            email: email,
+            password:newPassword,
+            key: codigoContraseña
+          }).then((response) => {
+            this.e1 = 4
+
+          }).catch((error2)  =>{
+              if (error2.response) {
+                this.tipo="error"
+                this.errorGetCodeContraseña = true;
+                this.errorMesage=error2.response.data.warning+" "
+                if (error2.response.data.more) {
+                  this.errorMesage=this.errorMesage+" "+error2.response.data.more[0].message
+                }
+                setTimeout(() => this.errorGetCodeContraseña=false, 5000);
+              }
+            
+            });
+      }
       
       
 

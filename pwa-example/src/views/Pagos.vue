@@ -148,14 +148,11 @@ export default  {
             localStorage.setItem("email",email)
             localStorage.setItem("id",id)
             localStorage.setItem("login","true")
-            this.$router.push('Home')
+            this.$router.push('home')
           }).catch((error2) => {
               //esta parte es de control de errores hay que modificar el valor del 
               //error a true para que se muestren no obstante no se como cambiarlo por eso quedo asi 
-              let headers={
-              Authorization:"Bearer "+localStorage.getItem("token"),
-              'Content-Type': "application/json",
-              }
+              
               this.error=true;
               this.errorMesage=error2.response.data.warning;
               setTimeout(() => this.error=false, 3000);

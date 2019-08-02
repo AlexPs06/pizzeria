@@ -33,7 +33,7 @@
                 </v-layout>
             </v-container>
             <v-layout align-center column justify-center>
-                 <h4 class="subheading" :to="{name:'Register'}" >¿tienes cuenta?
+                 <h4 class="subheading"  >¿tienes cuenta?
                     <v-btn  flat :to="{name:'Login'}">
                         <span class="mr-2 black--text">Inicia sesion</span>
                     </v-btn>

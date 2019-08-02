@@ -6,15 +6,22 @@
         <p>{{ pedidos }}</p>-->
         
         <td>{{ pedidos.item.id}}</td>
-        <td>{{ pedidos.item.username}}</td>
-        <td>{{ pedidos.item.email}}</td>
-        <tr v-for="compra in pedidos.item.compras">
-          <td> {{ compra.direccion }} </td>
-          <td> {{ compra.referencias }} </td>
-          <td> {{ compra.telefono }} </td>
-          <td> {{ compra.estatus }} </td>          
-        </tr>
-        <td v-if="pedidos.item.compras.length == 0" >Datos no disponibles</td>              
+        <td>{{ pedidos.item.nombre}}</td>
+        <td>{{ pedidos.item.correo}}</td>
+        <td>{{ pedidos.item.direccion}}</td>
+        <td>{{ pedidos.item.referencias}}</td>
+        <td>{{ pedidos.item.telefono}}</td>
+        <td>{{ pedidos.item.estatus}}</td>
+        <td>
+          <v-btn
+            v-if="ocultar != pedidos.item.id"
+            color="info"
+            @click="mostrarPedido(pedidos.item.id,pedidos.item.lista )"
+          >Ver pedido</v-btn>
+          <v-btn fab small v-if="ocultar == pedidos.item.id" color="error" @click="ocultarPedido()">
+            <v-icon>remove</v-icon>
+          </v-btn>
+        </td>
       </template>
     </v-data-table>
     <br />
@@ -59,6 +66,7 @@ export default {
       ],
       pedidos: [],
       ordenes: [],
+      
       ocultar: 0
     };
   },
@@ -66,21 +74,25 @@ export default {
     const api = "https://alfredito-pizzeria.herokuapp.com/api/v1";
     const token = localStorage.getItem('token')
     const header = {headers: { Authorization: "Bearer " + token } }
-    axios.get(api + "/compras", header)
+    axios.get(api + "/compras_usuario", header)
     .then(response => {
       console.log('Result:')
-      console.log(this.pedidos.data)
+      console.log(response.data)//length
       this.pedidos = response.data;
+
     }).catch(error => {
       console.log('Algo salio mal')
-      console.log(error)
+      console.log(error.response)
     });
   },
   methods: {
-    mostrarPedido(id) {
+    mostrarPedido(id,lista) {
       this.ocultar = id;
       this.ordenes = [];
-      let elementos = JSON.parse(this.pedidos[id - 1].lista);
+      console.log(id)
+      // console.log(this.pedidos[id - 1].lista)
+
+      let elementos = JSON.parse(lista);
       elementos.forEach(pedido => {
         this.ordenes.push(pedido);
       });
