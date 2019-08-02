@@ -45,7 +45,7 @@
                     <v-text-field v-model="data_pizza.ingredientes" placeholder="Ingredientes" type="text"  solo></v-text-field>
                     <v-text-field v-model="data_pizza.imagen" placeholder="Imagen" type="text"   solo></v-text-field>
                     <v-textarea   v-model="data_pizza.descripcion" placeholder="Descripción" solo auto-grow></v-textarea>
-                    <v-text-field v-model="data_pizza.precio" placeholder="Precio" solo value="10.00" prefix="$"></v-text-field>
+                    <v-text-field v-model.number="data_pizza.precio" placeholder="Precio" solo value="10.00" prefix="$"></v-text-field>
                   </v-form>
                 </v-flex>
               </v-layout>
@@ -104,63 +104,121 @@
         { text: 'Opciones' }
       ],
     }),
+
     created(){
       this.getPizzas()
     },
-    methods:{
-        async getPizzas(){
-          try{
-            this.pizzas = (await axios.get(`${URL}/pizzas`)).data
-          }catch(ex){
-            console.log('Error')
-          }
-        }, 
 
-        async SavePizza(){
+    methods:{
+      
+      async getPizzas(){
+        try{
+          this.pizzas = (await axios.get(`${URL}/pizzas`)).data
+        }catch(ex){
+          console.log('Error')
+        }
+      }, 
+
+      async SavePizza(){
+        var eraseData = true
+        if(this.formIsValid()){
           try{
             const config = { headers: {'Authorization': 'Bearer ' + token } };
             const params = this.data_pizza
             if(!this.isEdit){
               await axios.post(`${URL}/pizzas`, params, config)
+              this.pizzas.push(params)
             }else{
-              await axios.put(`${URL}/pizzas/${this.pizza_id}`, params, config)
+              const aux_id = this.pizza_id
+              const aux_pizza = this.data_pizza
+              this.pizzas.forEach(function(element) {
+                if(element.id == aux_id){
+                  element.nombre = aux_pizza.nombre
+                  element.ingredientes = aux_pizza.ingredientes
+                  element.descripcion = aux_pizza.descripcion
+                  element.imagen = aux_pizza.imagen
+                  element.precio = aux_pizza.precio
+                }
+              });
+              (await axios.put(`${URL}/pizzas/${this.pizza_id}`, params, config)).data
             }
-            
+              
           }catch(Ex){
             console.log('Algo salio mal')
-          }
-          this.dialog = false
-          this.isEdit = false
-          this.pizza_id = 0
-          this.eraseDataPizza()
-        },
+          }  
+        }
+        this.dialog = false
+        this.isEdit = false
+        this.pizza_id = 0
+        this.eraseDataPizza(eraseData)
+      },
 
-        async SetPizza(pizza_id){
-          this.data_pizza = this.pizzas.find( x => x.id == pizza_id ) 
-          this.dialog = true
-          this.isEdit = true
-          this.pizza_id = pizza_id
-        },
+      async SetPizza(pizza_id){
+        const aux_pizzas =  JSON.parse(JSON.stringify(this.pizzas))
+        this.data_pizza = aux_pizzas.find( x => x.id == pizza_id )
+        this.dialog = true
+        this.isEdit = true
+        this.pizza_id = pizza_id
+      },
 
-        async DeletePizza(pizza_id){
-          try{
-            const config = { headers: {'Authorization': 'Bearer ' + token } };
-            await axios.delete(`${URL}/pizzas/${pizza_id}`, config)
-            this.pizzas =  this.pizzas.filter(function(ele){return ele.id != pizza_id;});
-          }catch(Ex){
-            console.log('Error')
-          }
-        },
+      async DeletePizza(pizza_id){
+        try{
+          const config = { headers: {'Authorization': 'Bearer ' + token } };
+          await axios.delete(`${URL}/pizzas/${pizza_id}`, config)
+          this.pizzas =  this.pizzas.filter(function(ele){return ele.id != pizza_id;});
+        }catch(Ex){
+          console.log('Error')
+        }
+      },
 
-        eraseDataPizza(){
+      eraseDataPizza(eraseData){
+        if(eraseData){
           this.data_pizza = {
             nombre: '',
             ingredientes: '',
             imagen: 'https://images.vexels.com/media/users/3/157235/isolated/preview/a6f8c1c10614213e9b2754dabdadb4a6-tasty-pizza-icon-by-vexels.png',
             descripcion: '',
             precio: ''
-          }   
+          }            
         }
+      },
+
+      nombreIsValid(){
+        return !!this.data_pizza.nombre
+      },
+
+      ingredientesIsValid(){
+        return !!this.data_pizza.ingredientes
+      },
+
+      imagenIsValid(){
+        return !!this.data_pizza.imagen
+      },
+
+      descripcionIsValid(){
+        return !!this.data_pizza.descripcion
+      },
+
+      precioIsValid(){
+        return this.data_pizza.precio > 100
+      },
+
+      formIsValid(){
+        console.log('--------------------------------------------->')
+        console.log('Nombre')
+        console.log(this.nombreIsValid())
+        console.log('Ingredientes')
+        console.log(this.ingredientesIsValid())
+        console.log('Imagen')
+        console.log(this.imagenIsValid())
+        console.log('Descripción')
+        console.log(this.descripcionIsValid())
+        console.log('Precio')
+        console.log(this.precioIsValid())
+
+        return this.nombreIsValid() && this.ingredientesIsValid() && this.imagenIsValid() && this.descripcionIsValid() && this.precioIsValid()
+      },
+
     }
   };
 </script>
